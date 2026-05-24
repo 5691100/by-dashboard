@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Рекламный рынок Беларуси 2016–2026 · Анализ</title>
+  <title>Рекламный рынок Беларуси 2016–2026</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#e2e8f0;padding:24px 20px;min-height:100vh}
+    ::-webkit-scrollbar{width:4px;height:4px}
+    ::-webkit-scrollbar-track{background:#0d1117}
+    ::-webkit-scrollbar-thumb{background:#1e2d45;border-radius:2px}
 
     .wrap{max-width:1160px;margin:0 auto}
 
@@ -19,14 +22,13 @@
     /* LAYOUT */
     .row2{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px}
     .row2eq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
-    @media(max-width:900px){.row2,.row2eq,.row3{grid-template-columns:1fr}}
+    @media(max-width:900px){.row2,.row2eq{grid-template-columns:1fr}}
 
     /* KPI */
     .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
     @media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
     .kpi{background:#161b27;border:1px solid #1e2d45;border-radius:10px;padding:14px 12px;text-align:center}
-    .kpi .v{font-size:1.55rem;font-weight:800;line-height:1}
+    .kpi .v{font-size:1.5rem;font-weight:800;line-height:1}
     .kpi .l{font-size:.68rem;color:#64748b;margin-top:5px;line-height:1.4}
     .kpi .s{font-size:.62rem;color:#3d5470;margin-top:3px}
     .blue{color:#38bdf8}.red{color:#f87171}.green{color:#4ade80}.orange{color:#fb923c}.purple{color:#a78bfa}.yellow{color:#facc15}
@@ -37,77 +39,21 @@
     .ch{position:relative}
     .h320{height:320px}.h220{height:220px}.h180{height:180px}.h200{height:200px}
 
-    /* LAYER TABS */
-    .layer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
-    @media(max-width:700px){.layer-grid{grid-template-columns:1fr}}
-    .layer{border-radius:10px;padding:14px 16px}
-    .layer-1{background:#0f1a1a;border:1px solid #38bdf833}
-    .layer-2{background:#0f1a12;border:1px solid #4ade8033}
-    .layer-3{background:#1a1412;border:1px solid #fb923c33}
-    .layer .ltag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-    .layer-1 .ltag{color:#38bdf8}.layer-2 .ltag{color:#4ade80}.layer-3 .ltag{color:#fb923c}
-    .layer ul{list-style:none;padding:0}
-    .layer li{font-size:.73rem;color:#94a3b8;padding:4px 0;border-bottom:1px solid #ffffff08;line-height:1.5}
-    .layer li:last-child{border-bottom:none}
-    .layer li strong{color:#e2e8f0}
+    /* SECTION LABEL */
+    .sl{font-size:.68rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.1em;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+    .sl::after{content:'';flex:1;height:1px;background:#1e2d45}
 
-    /* PROBABILITY TABLE */
-    .prob-table{width:100%;border-collapse:collapse;font-size:.74rem}
-    .prob-table th{text-align:left;color:#475569;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px solid #1e2d45}
-    .prob-table td{padding:8px 10px;border-bottom:1px solid #0d1117;color:#cbd5e1;vertical-align:middle}
-    .prob-table tr:hover td{background:#1a2030}
-    .prob-table tr:last-child td{border-bottom:none}
-    .prob-bar-wrap{display:flex;align-items:center;gap:8px}
-    .prob-bar{height:6px;border-radius:3px;flex-shrink:0}
-    .prob-val{font-size:.7rem;color:#94a3b8;white-space:nowrap}
+    /* QUOTE */
+    .quote-box{background:#0a1020;border-left:3px solid #38bdf8;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-size:.8rem;color:#94a3b8;font-style:italic;line-height:1.7}
+    .quote-box strong{color:#38bdf8;font-style:normal}
 
-    /* STRESS TEST */
-    .stress-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    @media(max-width:700px){.stress-row{grid-template-columns:1fr}}
-    .stress-card{background:#1a0e12;border:1px solid #f8717133;border-radius:8px;padding:14px;text-align:center}
-    .stress-card .sv{font-size:1.6rem;font-weight:800;color:#f87171;line-height:1}
-    .stress-card .sl{font-size:.7rem;color:#94a3b8;margin-top:5px;line-height:1.4}
-    .stress-card .ss{font-size:.65rem;color:#475569;margin-top:4px}
-
-    /* SHARE VS SPEND */
-    .svs-table{width:100%;border-collapse:collapse;font-size:.75rem}
-    .svs-table th{color:#475569;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px solid #1e2d45;text-align:right}
-    .svs-table th:first-child{text-align:left}
-    .svs-table td{padding:8px 10px;border-bottom:1px solid #0d1117;text-align:right}
-    .svs-table td:first-child{text-align:left;color:#94a3b8}
-    .svs-table tr:last-child td{border-bottom:none}
-
-    /* WATCHLIST */
-    .watch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    @media(max-width:800px){.watch-grid{grid-template-columns:repeat(2,1fr)}}
-    .wcard{border-radius:8px;padding:14px}
-    .wcard.ok{background:#0f1a12;border:1px solid #4ade8033}
-    .wcard.warn{background:#1a1412;border:1px solid #fb923c33}
-    .wcard.bad{background:#1a0e12;border:1px solid #f8717133}
-    .wcard.unknown{background:#111827;border:1px solid #47556933}
-    .wcard .wname{font-size:.8rem;font-weight:700;color:#e2e8f0;margin-bottom:6px}
-    .wcard .wprob{font-size:.68rem;font-weight:700;margin-bottom:4px}
-    .wcard.ok   .wprob{color:#4ade80}
-    .wcard.warn .wprob{color:#fb923c}
-    .wcard.bad  .wprob{color:#f87171}
-    .wcard.unknown .wprob{color:#475569}
-    .wcard .wtext{font-size:.68rem;color:#64748b;line-height:1.5}
-
-    /* THESIS */
-    .thesis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-bottom:14px}
-    .thesis{background:#161b27;border:1px solid #1e2d45;border-radius:10px;padding:14px 16px}
-    .thesis.ok  {border-left:3px solid #4ade80}
-    .thesis.warn{border-left:3px solid #fb923c}
-    .thesis.bad {border-left:3px solid #f87171}
-    .thesis .claim{font-size:.74rem;font-weight:700;color:#cbd5e1;margin-bottom:5px;font-style:italic}
-    .thesis .verdict{font-size:.7rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-    .thesis.ok   .verdict{color:#4ade80}
-    .thesis.warn .verdict{color:#fb923c}
-    .thesis.bad  .verdict{color:#f87171}
-    .thesis .why{font-size:.7rem;color:#94a3b8;line-height:1.5}
-    .thesis .src{font-size:.62rem;color:#334155;margin-top:6px}
-    .thesis .src a{color:#38bdf877;text-decoration:none}
-    .thesis .src a:hover{color:#38bdf8}
+    /* SCENARIO TOGGLE */
+    .scenario-btns{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+    .scn-btn{padding:6px 14px;font-size:.72rem;font-weight:600;border-radius:6px;border:1px solid #1e2d45;background:#161b27;color:#64748b;cursor:pointer;transition:all .2s}
+    .scn-btn:hover{border-color:#38bdf855;color:#94a3b8}
+    .scn-btn.active{background:#38bdf811;border-color:#38bdf8;color:#38bdf8}
+    .scn-btn.active.warn{background:#fb923c11;border-color:#fb923c;color:#fb923c}
+    .scn-btn.active.bad{background:#f8717111;border-color:#f87171;color:#f87171}
 
     /* BADGES */
     .badge{display:inline-block;font-size:.6rem;padding:2px 6px;border-radius:4px;font-weight:600;vertical-align:middle;margin-left:4px}
@@ -115,78 +61,189 @@
     .badge.mid{background:#fb923c22;color:#fb923c;border:1px solid #fb923c44}
     .badge.lo {background:#f8717122;color:#f87171;border:1px solid #f8717144}
 
-    /* FORECAST TABLE */
-    .fc-table{width:100%;border-collapse:collapse;font-size:.74rem}
-    .fc-table th{text-align:left;color:#475569;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px solid #1e2d45}
-    .fc-table td{padding:8px 10px;border-bottom:1px solid #0d1117;color:#cbd5e1;vertical-align:top}
-    .fc-table tr:hover td{background:#1a2030}
-    .fc-table tr:last-child td{border-bottom:none}
-    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
-    .dot.g{background:#4ade80}.dot.y{background:#fb923c}.dot.r{background:#f87171}.dot.k{background:#475569}
+    /* PROBABILITY TABLE */
+    .prob-table{width:100%;border-collapse:collapse;font-size:.74rem}
+    .prob-table th{text-align:left;color:#475569;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;padding:7px 10px;border-bottom:1px solid #1e2d45}
+    .prob-row{cursor:pointer;transition:background .15s}
+    .prob-row:hover td{background:#1a2030}
+    .prob-row td{padding:9px 10px;border-bottom:1px solid #0d1117;color:#cbd5e1;vertical-align:middle}
+    .prob-row:last-of-type td{border-bottom:none}
+    .prob-detail{display:none;background:#0f1520}
+    .prob-detail.open{display:table-row}
+    .prob-detail td{padding:10px 14px 14px;border-bottom:1px solid #0d1117;color:#94a3b8;font-size:.72rem;line-height:1.7}
+    .prob-bar-wrap{display:flex;align-items:center;gap:8px}
+    .prob-bar{height:6px;border-radius:3px;transition:width .6s ease}
+    .prob-val{font-size:.7rem;color:#94a3b8;white-space:nowrap}
+    .expand-arrow{display:inline-block;margin-left:6px;font-size:.7rem;color:#334155;transition:transform .2s;vertical-align:middle}
+    .prob-row.open .expand-arrow{transform:rotate(90deg)}
+
+    /* THESIS ACCORDION */
+    .thesis-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+    .thesis-item{border-radius:10px;overflow:hidden;border:1px solid #1e2d45}
+    .thesis-item.ok  {border-left:3px solid #4ade80}
+    .thesis-item.warn{border-left:3px solid #fb923c}
+    .thesis-item.bad {border-left:3px solid #f87171}
+    .thesis-header{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;background:#161b27;transition:background .15s;user-select:none}
+    .thesis-header:hover{background:#1a2030}
+    .th-icon{font-size:1.1rem;flex-shrink:0}
+    .th-meta{flex:1}
+    .th-claim{font-size:.75rem;font-style:italic;color:#94a3b8;margin-bottom:3px}
+    .th-verdict{font-size:.73rem;font-weight:700}
+    .thesis-item.ok   .th-verdict{color:#4ade80}
+    .thesis-item.warn .th-verdict{color:#fb923c}
+    .thesis-item.bad  .th-verdict{color:#f87171}
+    .th-prob{font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:4px;flex-shrink:0}
+    .thesis-item.ok   .th-prob{background:#4ade8022;color:#4ade80;border:1px solid #4ade8033}
+    .thesis-item.warn .th-prob{background:#fb923c22;color:#fb923c;border:1px solid #fb923c33}
+    .thesis-item.bad  .th-prob{background:#f8717122;color:#f87171;border:1px solid #f8717133}
+    .th-arrow{font-size:.8rem;color:#334155;transition:transform .2s;flex-shrink:0}
+    .thesis-item.expanded .th-arrow{transform:rotate(90deg)}
+
+    .thesis-body{display:none;background:#0f1520;border-top:1px solid #1e2d45;padding:16px}
+    .thesis-item.expanded .thesis-body{display:block}
+
+    .tb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    @media(max-width:700px){.tb-grid{grid-template-columns:1fr}}
+    .tb-block{background:#161b27;border-radius:8px;padding:12px}
+    .tb-block .tbb-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#475569;margin-bottom:6px}
+    .tb-block .tbb-text{font-size:.72rem;color:#94a3b8;line-height:1.6}
+    .tb-block .tbb-text strong{color:#e2e8f0}
+    .tb-block.highlight{border:1px solid #38bdf822}
+    .tb-change{background:#1a1412;border:1px solid #fb923c22;border-radius:8px;padding:10px 12px;margin-top:8px}
+    .tb-change .tbb-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#fb923c;margin-bottom:5px}
+    .tb-change .tbb-text{font-size:.7rem;color:#94a3b8;line-height:1.6}
+    .tb-sources{margin-top:10px;font-size:.65rem;color:#334155}
+    .tb-sources a{color:#38bdf866;text-decoration:none}
+    .tb-sources a:hover{color:#38bdf8}
+
+    /* STRESS */
+    .stress-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+    @media(max-width:700px){.stress-row{grid-template-columns:1fr}}
+    .stress-card{background:#1a0e12;border:1px solid #f8717133;border-radius:8px;padding:14px;text-align:center}
+    .stress-card .sv{font-size:1.6rem;font-weight:800;color:#f87171;line-height:1}
+    .stress-card .sl2{font-size:.7rem;color:#94a3b8;margin-top:5px;line-height:1.4}
+    .stress-card .ss{font-size:.63rem;color:#475569;margin-top:4px}
+
+    /* WATCHLIST */
+    .watch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    @media(max-width:800px){.watch-grid{grid-template-columns:repeat(2,1fr)}}
+    .wcard{border-radius:8px;overflow:hidden}
+    .wcard-header{padding:13px 14px;cursor:pointer;transition:opacity .15s;user-select:none}
+    .wcard-header:hover{opacity:.85}
+    .wcard.ok   .wcard-header{background:#0f1a12;border:1px solid #4ade8033}
+    .wcard.warn .wcard-header{background:#1a1412;border:1px solid #fb923c33}
+    .wcard.bad  .wcard-header{background:#1a0e12;border:1px solid #f8717133}
+    .wcard.grey .wcard-header{background:#111827;border:1px solid #47556933}
+    .wcard .wname{font-size:.82rem;font-weight:700;color:#e2e8f0;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
+    .wcard .wname .wa{font-size:.75rem;color:#334155;transition:transform .2s}
+    .wcard.expanded .wname .wa{transform:rotate(90deg)}
+    .wcard .wprob{font-size:.68rem;font-weight:700}
+    .wcard.ok   .wprob{color:#4ade80}
+    .wcard.warn .wprob{color:#fb923c}
+    .wcard.bad  .wprob{color:#f87171}
+    .wcard.grey .wprob{color:#475569}
+    .wcard .wshort{font-size:.67rem;color:#475569;margin-top:4px;line-height:1.4}
+    .wcard-body{display:none;padding:12px 14px;font-size:.7rem;color:#94a3b8;line-height:1.6;border-top:1px solid #1e2d45}
+    .wcard.ok   .wcard-body{background:#080f09;border-color:#4ade8022}
+    .wcard.warn .wcard-body{background:#0e0b09;border-color:#fb923c22}
+    .wcard.bad  .wcard-body{background:#0e0809;border-color:#f8717122}
+    .wcard.grey .wcard-body{background:#090c12;border-color:#47556922}
+    .wcard.expanded .wcard-body{display:block}
 
     /* SEARCH RISK */
-    .search-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-    @media(max-width:700px){.search-row{grid-template-columns:1fr}}
+    .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    @media(max-width:700px){.ai-grid{grid-template-columns:1fr}}
+    .stat-pill{background:#0f1a1a;border:1px solid #38bdf822;border-radius:8px;padding:12px;margin-bottom:8px}
+    .stat-pill:last-child{margin-bottom:0}
+    .stat-pill .sp-val{font-size:1.35rem;font-weight:800;line-height:1;margin-bottom:4px}
+    .stat-pill .sp-txt{font-size:.68rem;color:#94a3b8;line-height:1.5}
+    .stat-pill .sp-src{font-size:.6rem;color:#334155;margin-top:3px}
+    .stat-pill .sp-src a{color:#38bdf855;text-decoration:none}
+    .stat-pill .sp-src a:hover{color:#38bdf8}
 
-    /* QUOTE */
-    .quote-box{background:#0a1020;border-left:3px solid #38bdf8;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-size:.8rem;color:#94a3b8;font-style:italic;line-height:1.7}
-    .quote-box strong{color:#38bdf8;font-style:normal}
+    /* LAYER GRID */
+    .layer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+    @media(max-width:700px){.layer-grid{grid-template-columns:1fr}}
+    .layer{border-radius:10px;padding:14px 16px}
+    .layer-1{background:#0f1a1a;border:1px solid #38bdf833}
+    .layer-2{background:#0f1a12;border:1px solid #4ade8033}
+    .layer-3{background:#1a1412;border:1px solid #fb923c33}
+    .layer .ltag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .layer-1 .ltag{color:#38bdf8}.layer-2 .ltag{color:#4ade80}.layer-3 .ltag{color:#fb923c}
+    .layer ul{list-style:none}
+    .layer li{font-size:.72rem;color:#94a3b8;padding:4px 0;border-bottom:1px solid #ffffff07;line-height:1.5}
+    .layer li:last-child{border-bottom:none}
+    .layer li strong{color:#e2e8f0}
+
+    /* SVS TABLE */
+    .svs-table{width:100%;border-collapse:collapse;font-size:.75rem}
+    .svs-table th{color:#475569;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px solid #1e2d45;text-align:right}
+    .svs-table th:first-child{text-align:left}
+    .svs-table td{padding:8px 10px;border-bottom:1px solid #0d1117;text-align:right}
+    .svs-table td:first-child{text-align:left;color:#94a3b8}
+    .svs-table tr:last-child td{border-bottom:none}
 
     /* TIMELINE */
     .tl{display:flex;overflow-x:auto;padding-bottom:4px;gap:0;margin-bottom:14px}
-    .te{flex:1;min-width:88px;background:#161b27;border:1px solid #1e2d45;border-right:none;padding:10px 8px}
+    .te{flex:1;min-width:86px;background:#161b27;border:1px solid #1e2d45;border-right:none;padding:10px 8px}
     .te:first-child{border-radius:10px 0 0 10px}
     .te:last-child{border-radius:0 10px 10px 0;border-right:1px solid #1e2d45}
     .te.shock{background:#1a0f14;border-color:#f8717155}
     .te.rec{background:#0f1a14;border-color:#4ade8033}
-    .te .ty{font-size:.85rem;font-weight:800;color:#fff}
+    .te .ty{font-size:.83rem;font-weight:800;color:#fff}
     .te.shock .ty{color:#f87171}
     .te.rec   .ty{color:#4ade80}
-    .te .tv{font-size:.63rem;color:#475569;margin:2px 0 5px}
-    .te .tt{font-size:.63rem;color:#94a3b8;line-height:1.4}
+    .te .tv{font-size:.62rem;color:#475569;margin:2px 0 4px}
+    .te .tt{font-size:.62rem;color:#94a3b8;line-height:1.4}
 
-    .section-label{font-size:.68rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px;padding-left:2px;display:flex;align-items:center;gap:8px}
-    .section-label::after{content:'';flex:1;height:1px;background:#1e2d45}
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+    .dot.g{background:#4ade80}.dot.y{background:#fb923c}.dot.r{background:#f87171}.dot.k{background:#475569}
 
-    .footer{text-align:center;color:#1e2d45;font-size:.63rem;margin-top:20px;line-height:1.8}
-    .footer a{color:#1e2d4588;text-decoration:none}
-    .footer a:hover{color:#38bdf8}
+    .footer{text-align:center;color:#1e2d45;font-size:.63rem;margin-top:20px;line-height:2}
+    .footer a{color:#1e2d4577;text-decoration:none}.footer a:hover{color:#38bdf8}
   </style>
 </head>
 <body>
 <div class="wrap">
 
-<!-- HEADER -->
 <div class="hdr">
   <h1>Рекламный рынок Беларуси 2016–2026 — данные, анализ, вероятности</h1>
-  <p>Источник данных: arobelarus · Пост: German Golub (LinkedIn) · Обзор: ClaudeClaw + Codex</p>
+  <p>Источник: arobelarus · Пост: German Golub (LinkedIn) · Анализ: ClaudeClaw + CodexClaw · 2026-05-24</p>
 </div>
 
-<!-- QUOTE -->
 <div class="quote-box">
-  <strong>Вывод двух агентов:</strong> «Данные подтверждают тезис об интернет-первом рынке, но не подтверждают историю цифрового бума. К 2024 году интернет занимает 55% рынка, однако абсолютные расходы всё ещё ниже пика 2019. Прогноз 2025–2026 предполагает необычно быстрое восстановление без объяснения конкретного драйвера. Доминирование интернета — базовый сценарий. Рынок > $100M — агрессивный сценарий.»
+  <strong>Вывод:</strong> «Данные подтверждают тезис об интернет-первом рынке, но не историю цифрового бума. К 2024 году интернет занимает 55% рынка, однако его абсолютные расходы всё ещё ниже пика 2019. Прогноз 2025–2026 требует необычно быстрого восстановления без объяснения конкретного драйвера. Доминирование интернета — базовый сценарий. Рынок > $100M — агрессивный.»
 </div>
 
 <!-- KPI -->
 <div class="kpi-row">
   <div class="kpi"><div class="v blue">$108M</div><div class="l">Пик 2019</div><div class="s">до кризиса</div></div>
-  <div class="kpi"><div class="v red">$64.9M</div><div class="l">Дно 2022<br>−24% YoY</div><div class="s">реальный обвал, не 2020</div></div>
-  <div class="kpi"><div class="v orange">$73.8M</div><div class="l">Рынок 2024<br>−31.7% от пика 2019</div></div>
-  <div class="kpi"><div class="v green">55%</div><div class="l">Доля интернета 2024<br>было 26% в 2016</div></div>
-  <div class="kpi"><div class="v yellow">$40.9M</div><div class="l">Интернет 2024<br>−9.3% от пика 2019</div><div class="s">4 года стагнации $40–45M</div></div>
-  <div class="kpi"><div class="v purple">$8</div><div class="l">Реклама на душу<br>Чехия $146 · Казахстан $27</div></div>
+  <div class="kpi"><div class="v red">$64.9M</div><div class="l">Дно 2022 · −24%</div><div class="s">реальный обвал, не 2020</div></div>
+  <div class="kpi"><div class="v orange">$73.8M</div><div class="l">Рынок 2024</div><div class="s">−31.7% от пика 2019</div></div>
+  <div class="kpi"><div class="v yellow">$40.9M</div><div class="l">Интернет 2024</div><div class="s">−9.3% от пика 2019 · flat 4 года</div></div>
+  <div class="kpi"><div class="v green">55%</div><div class="l">Доля интернета 2024</div><div class="s">было 26% в 2016</div></div>
+  <div class="kpi"><div class="v purple">$8</div><div class="l">Реклама на душу</div><div class="s">Чехия $146 · Казахстан $27</div></div>
 </div>
 
 <!-- CHARTS ROW 1 -->
+<div class="sl">Данные рынка</div>
 <div class="row2">
   <div class="card">
     <h2>Рекламный рынок по каналам, $ млн <span class="badge hi">Chart-derived</span></h2>
+    <div class="scenario-btns">
+      <button class="scn-btn active" onclick="setScenario('post',this)">Прогноз поста</button>
+      <button class="scn-btn" onclick="setScenario('base',this)">Базовый сценарий</button>
+      <button class="scn-btn" onclick="setScenario('cons',this)" style="">Консервативный</button>
+    </div>
+    <div id="scn-label" style="font-size:.68rem;color:#475569;margin-bottom:8px">
+      Оригинальный прогноз из поста: 2025F=$102.5M (+39%), 2026F=$123.6M (+21%)
+    </div>
     <div class="ch h320"><canvas id="c1"></canvas></div>
   </div>
   <div class="card">
-    <h2>Доля интернета в рынке, %</h2>
+    <h2>Доля интернета, %</h2>
     <div class="ch h180"><canvas id="c2"></canvas></div>
-    <h2 style="margin-top:16px">YoY прирост: рынок vs интернет</h2>
+    <h2 style="margin-top:14px">YoY прирост: рынок vs интернет</h2>
     <div class="ch h180" style="margin-top:8px"><canvas id="c3"></canvas></div>
   </div>
 </div>
@@ -194,17 +251,17 @@
 <!-- CHARTS ROW 2 -->
 <div class="row2eq">
   <div class="card">
-    <h2>Интернет vs традиционные каналы, $ млн</h2>
+    <h2>Интернет vs традиционные, $ млн</h2>
     <div class="ch h220"><canvas id="c4"></canvas></div>
   </div>
   <div class="card">
-    <h2>Реклама на душу населения, $  <span class="badge mid">External benchmark</span></h2>
+    <h2>Реклама на душу населения, $ <span class="badge mid">Statista 2024</span></h2>
     <div class="ch h220"><canvas id="c5"></canvas></div>
   </div>
 </div>
 
 <!-- THREE LAYERS -->
-<div class="section-label">Три слоя анализа</div>
+<div class="sl">Три слоя анализа</div>
 <div class="layer-grid">
   <div class="layer layer-1">
     <div class="ltag">📰 Что утверждает пост</div>
@@ -218,270 +275,416 @@
     </ul>
   </div>
   <div class="layer layer-2">
-    <div class="ltag">📊 Что следует из данных графика</div>
+    <div class="ltag">📊 Что следует из данных</div>
     <ul>
-      <li>Интернет — крупнейший канал с 2022, <strong>55% доли</strong></li>
-      <li>Интернет-spend в 2024 <strong>ниже 2019</strong> на 9.3%</li>
+      <li>Интернет — крупнейший канал, <strong>55% доли</strong></li>
+      <li>Интернет-spend 2024 <strong>ниже 2019</strong> на 9.3%</li>
       <li>2022 хуже 2020: −24% vs −18%</li>
       <li>Традиционные каналы не вернутся к 2019</li>
-      <li>2025F требует <strong>+39% YoY</strong> — без объяснения драйвера</li>
-      <li>2020→2024 интернет почти flat: $40.5M→$40.9M</li>
+      <li>2025F требует <strong>+39% YoY</strong> без драйвера</li>
+      <li>Интернет 2020→2024 почти flat: $40.5→$40.9M</li>
     </ul>
   </div>
   <div class="layer layer-3">
-    <div class="ltag">🔍 Интерпретация (ClaudeClaw + Codex)</div>
+    <div class="ltag">🔍 Интерпретация (ClaudeClaw + CodexClaw)</div>
     <ul>
-      <li>Структурный сдвиг необратим, но это <strong>другой рынок</strong></li>
-      <li>2022 доля 55% — survivorship bias, не рост digital</li>
-      <li>Прогноз агрессивен: Польша росла +17.8%, BY прогнозирует +39%</li>
-      <li>AI-риск реален, но для BY через <strong>Google (64%)</strong>, не только Яндекс</li>
-      <li>E-com тренд глобален, BY отстаёт на 3–5 лет ($1.79M рынок)</li>
+      <li>Структурный сдвиг необратим — <strong>другой рынок</strong></li>
+      <li>2022: доля 55% = denominator effect, не рост</li>
+      <li>Прогноз агрессивен: Польша +17.8%, BY → +39%?</li>
+      <li>AI-риск реален, но Google 64% в BY (не Яндекс)</li>
+      <li>Retail media тренд — реален глобально, BY −3–5 лет</li>
       <li>Закон 2028 — непроверяемый тезис</li>
     </ul>
   </div>
 </div>
 
 <!-- SHARE VS SPEND -->
-<div class="section-label">Share vs Spend — в чём разница</div>
+<div class="sl">Share vs Spend — denominator effect</div>
 <div class="card" style="margin-bottom:14px">
   <h2>Почему рост доли интернета ≠ рост интернет-рекламы <span class="badge hi">Chart-derived</span></h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
     <div>
-      <p style="font-size:.78rem;color:#94a3b8;line-height:1.7;margin-bottom:10px">
-        В 2022 году оба сегмента теряли деньги. Доля интернета выросла с 46% до 55%
-        потому что традиционные каналы упали <strong style="color:#f87171">на 38%</strong>,
-        интернет — только <strong style="color:#fb923c">на 8%</strong>.
-      </p>
-      <p style="font-size:.78rem;color:#94a3b8;line-height:1.7;margin-bottom:10px">
-        Аналогия: если две компании теряют выручку, но одна теряет меньше — её «рыночная доля» растёт.
-        Это не победа, это «победа выжившего».
-      </p>
-      <p style="font-size:.78rem;color:#4ade80;line-height:1.7">
-        Долгосрочный тренд роста доли — <strong>реален и устойчив</strong>.
-        Но конкретный скачок 2022 — это denominator effect, а не рост спроса на digital.
-      </p>
+      <p style="font-size:.78rem;color:#94a3b8;line-height:1.7;margin-bottom:10px">В 2022 году оба сегмента теряли деньги. Доля интернета выросла с 46% до 55% потому что традиционные каналы упали <strong style="color:#f87171">−38%</strong>, интернет — только <strong style="color:#fb923c">−8%</strong>.</p>
+      <p style="font-size:.78rem;color:#94a3b8;line-height:1.7;margin-bottom:10px">Это denominator effect: числитель (интернет) упал меньше, знаменатель (рынок) упал сильнее — доля выросла механически.</p>
+      <p style="font-size:.78rem;color:#4ade80;line-height:1.7">Долгосрочный тренд роста доли — <strong>реален и устойчив</strong>. Скачок 2022 — артефакт чужого коллапса.</p>
     </div>
     <div style="overflow-x:auto">
       <table class="svs-table">
         <thead><tr><th style="text-align:left">Канал</th><th>2021</th><th>2022</th><th>Δ $</th><th>Δ %</th></tr></thead>
         <tbody>
-          <tr><td style="color:#38bdf8">Интернет, $M</td><td>39.2</td><td>36.1</td><td style="color:#f87171">−3.1</td><td style="color:#f87171">−8%</td></tr>
-          <tr><td style="color:#a78bfa">Традиционные, $M</td><td>46.5</td><td>28.8</td><td style="color:#f87171">−17.7</td><td style="color:#f87171">−38%</td></tr>
-          <tr><td style="color:#e2e8f0">Итого рынок</td><td>85.7</td><td>64.9</td><td style="color:#f87171">−20.8</td><td style="color:#f87171">−24%</td></tr>
-          <tr><td style="color:#e2e8f0;font-weight:700">Доля интернета</td><td>46%</td><td style="color:#4ade80;font-weight:700">55%</td><td style="color:#4ade80">+9pp</td><td style="color:#64748b">⚠️ denominator</td></tr>
+          <tr><td style="color:#38bdf8">Интернет $M</td><td>39.2</td><td>36.1</td><td style="color:#f87171">−3.1</td><td style="color:#f87171">−8%</td></tr>
+          <tr><td style="color:#a78bfa">Традиционные $M</td><td>46.5</td><td>28.8</td><td style="color:#f87171">−17.7</td><td style="color:#f87171">−38%</td></tr>
+          <tr><td>Итого рынок</td><td>85.7</td><td>64.9</td><td style="color:#f87171">−20.8</td><td style="color:#f87171">−24%</td></tr>
+          <tr><td style="font-weight:700">Доля интернета</td><td>46%</td><td style="color:#4ade80;font-weight:700">55%</td><td style="color:#4ade80">+9pp</td><td style="color:#64748b;font-size:.65rem">denominator ⚠️</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
 
-<!-- FORECAST STRESS TEST -->
-<div class="section-label">Stress test прогноза</div>
+<!-- STRESS TEST -->
+<div class="sl">Stress test прогноза</div>
 <div class="card" style="margin-bottom:14px">
-  <h2>Что должно случиться чтобы прогноз исполнился <span class="badge lo">Local causal claim</span></h2>
-  <div class="stress-row" style="margin-bottom:14px">
+  <h2>Что требуется для реализации прогноза <span class="badge lo">Local causal claim</span></h2>
+  <div class="stress-row">
     <div class="stress-card">
       <div class="sv">+39%</div>
-      <div class="sl">YoY рост рынка в 2025F<br>$73.8M → $102.5M</div>
-      <div class="ss">Польша 2024: +17.8% · Чехия: +7.7%</div>
+      <div class="sl2">YoY рост рынка в 2025F<br>$73.8M → $102.5M</div>
+      <div class="ss">Польша 2024: +17.8% · Латвия: +7.6%</div>
     </div>
     <div class="stress-card">
       <div class="sv">+29.4%</div>
-      <div class="sl">CAGR рынка 2024–2026F<br>два года подряд</div>
+      <div class="sl2">CAGR рынка 2024–2026F<br>два года подряд</div>
       <div class="ss">Нет прецедента в регионе без внешнего шока</div>
     </div>
     <div class="stress-card">
       <div class="sv">−31.7%</div>
-      <div class="sl">Рынок 2024 к пику 2019<br>$73.8M vs $108M</div>
-      <div class="ss">Даже в 2026F (+$123.6M) рынок лишь на ~14% выше 2019</div>
+      <div class="sl2">Рынок 2024 ниже пика 2019<br>$73.8M vs $108M</div>
+      <div class="ss">В 2026F рынок лишь на ~14% выше 2019</div>
     </div>
   </div>
-  <p style="font-size:.75rem;color:#64748b;line-height:1.6">
-    Для сравнения: IAB Europe фиксирует рост цифровой рекламы по Европе +16.0% в 2024 (без Турции: +12.5%).
-    Быстрейшие рынки региона — Польша +17.8%, Латвия +7.6%, Чехия +7.7%.
-    Ни один рынок не показал +39% без специфического локального драйвера.
-  </p>
+  <p style="font-size:.73rem;color:#64748b;line-height:1.6">IAB Europe AdEx 2024: Польша +17.8%, Чехия +7.7%, Латвия +7.6% в постоянных EUR. Европейский digital в целом +16.0% (+12.5% без Турции). Прогноз BY в 2.5× быстрее лучших рынков Европы без указания локального драйвера.</p>
 </div>
 
 <!-- PROBABILITY TABLE -->
-<div class="section-label">Probability Lens — вероятности по тезисам</div>
+<div class="sl">Probability Lens — нажмите на строку для деталей</div>
 <div class="card" style="margin-bottom:14px">
-  <h2>Оценка вероятности реализации ключевых тезисов <span class="badge mid">Codex + ClaudeClaw</span></h2>
-  <table class="prob-table">
-    <thead><tr><th>Тезис</th><th style="width:180px">Вероятность</th><th>Обоснование</th></tr></thead>
+  <h2>Вероятности по ключевым тезисам <span class="badge mid">CodexClaw assessment</span></h2>
+  <table class="prob-table" id="probTable">
+    <thead><tr><th>Тезис</th><th style="width:200px">Вероятность</th><th style="width:100px">Оценка</th></tr></thead>
     <tbody>
-      <tr>
-        <td>Интернет остаётся крупнейшим каналом</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:88px;background:#4ade80"></div><span class="prob-val">85–90%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Структурный сдвиг уже произошёл. Западные бренды не вернутся → ТВ не восстановится</td>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>Интернет остаётся крупнейшим каналом <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#4ade80" data-w="88"></div><span class="prob-val">85–90%</span></div></td>
+        <td><span class="dot g"></span>Высокая</td>
       </tr>
-      <tr>
-        <td>Доля интернета ~50–55%</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:80px;background:#4ade80"></div><span class="prob-val">75–85%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Устойчиво даже если абсолютные прогнозы не исполнятся</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Почему вероятно:</strong> Структурный сдвиг уже произошёл. Западные бренды не вернутся — значит ТВ не восстановится до уровня, способного обойти интернет по доле. Новые рекламодатели (букмекеры, китайские бренды, e-com) идут преимущественно в digital. Это не прогноз — это уже факт 2022–2024.<br><br>
+        <strong>Что могло бы изменить:</strong> Только если появится крупный новый традиционный рекламодатель с имиджевыми бюджетами сопоставимыми с ушедшими западными брендами — маловероятно в обозримом горизонте.
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>Доля интернета ~50–55% <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#4ade80" data-w="80"></div><span class="prob-val">75–85%</span></div></td>
+        <td><span class="dot g"></span>Высокая</td>
       </tr>
-      <tr>
-        <td>Интернет достигнет $67.4M в 2026F</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:52px;background:#fb923c"></div><span class="prob-val">45–60%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Возможно, но требует роста после стагнации 2020–2024 ($40.5M→$40.9M за 4 года)</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Почему вероятно:</strong> Устойчиво даже если абсолютные прогнозы рынка не исполнятся. Доля определяется структурой рекламодателей, которая изменилась необратимо. Performance-ориентированные игроки не переходят обратно на ТВ.<br><br>
+        <strong>Важное уточнение:</strong> Не путать с ростом абсолютных расходов. Доля может оставаться 55%, пока общий рынок стагнирует — это не успех digital, это нейтральный факт.
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>Интернет достигнет $67.4M в 2026F <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#fb923c" data-w="52"></div><span class="prob-val">45–60%</span></div></td>
+        <td><span class="dot y"></span>Средняя</td>
       </tr>
-      <tr>
-        <td>Рынок > $100M в 2025F</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:30px;background:#f87171"></div><span class="prob-val">25–35%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Требует +39% YoY — нет прецедента в регионе без внешнего драйвера</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Контекст:</strong> Интернет-реклама в BY 2020–2024 показала почти нулевой рост: $40.5M → $40.9M за 4 года. Для достижения $67.4M к 2026 нужен CAGR ~28.4% — это радикальный выход из стагнации.<br><br>
+        <strong>В пользу:</strong> Китайские бренды наращивают присутствие, performance-маркетинг структурно растёт.<br>
+        <strong>Против:</strong> Нет идентифицированного нового крупного источника бюджетов. Стагнация 2020–2024 — это реальный тренд, не аномалия.
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>Рынок > $100M в 2025F <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#f87171" data-w="30"></div><span class="prob-val">25–35%</span></div></td>
+        <td><span class="dot r"></span>Низкая</td>
       </tr>
-      <tr>
-        <td>Рынок $123.6M в 2026F</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:37px;background:#f87171"></div><span class="prob-val">30–45%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Только при двух сильных годах подряд</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Проблема:</strong> Требует +39% YoY от $73.8M до $102.5M. Ни один сопоставимый рынок в регионе не показал такой рост без идентифицируемого внешнего шока или специфического локального драйвера.<br><br>
+        <strong>Для сравнения:</strong> Польша (крупнейший и быстрорастущий рынок CEE) — +17.8% в 2024. Казахстан — ~10–12%. Автор поста не объясняет, что именно разгонит BY в 2× быстрее Польши.<br><br>
+        <strong>Реалистичная оценка 2025:</strong> $80–88M при сохранении текущей траектории.
+        <div class="tb-sources" style="margin-top:8px">Источник: <a href="https://knowledge-hub.iab.gr/storage/uploads/article-files/iab-europe-adex-benchmark-2024-final-4Dm6.pdf" target="_blank">IAB Europe AdEx Benchmark 2024</a></div>
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>Рынок $123.6M в 2026F <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#f87171" data-w="37"></div><span class="prob-val">30–45%</span></div></td>
+        <td><span class="dot r"></span>Низкая</td>
       </tr>
-      <tr>
-        <td>ТВ $27.8M в 2026F</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:47px;background:#fb923c"></div><span class="prob-val">40–55%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Частичное восстановление реалистично, до 2019 ($31M) — нет</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Условие:</strong> Реализуемо только если 2025 тоже будет сильным. Если 2025 = $80–85M, то 2026 = $123.6M требует +45–55% YoY — ещё более агрессивно.<br><br>
+        <strong>Позитивный сценарий:</strong> Новый крупный сектор-рекламодатель (например, если IT-сектор начнёт активно рекламироваться), снятие каких-либо ограничений, или неожиданный приход крупного игрока. Без этого — маловероятно.
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>AI существенно повлияет на SEO в BY <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#fb923c" data-w="62"></div><span class="prob-val">55–70%</span></div></td>
+        <td><span class="dot y"></span>Средняя</td>
       </tr>
-      <tr>
-        <td>AI существенно повлияет на SEO в BY</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:62px;background:#fb923c"></div><span class="prob-val">55–70%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Глобально подтверждено. Для BY: Google 64% трафика (Statcounter), Yandex 34%. Эффект придёт</td>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Глобальные данные (реальные):</strong><br>
+        • Pew Research (900 пользователей, март 2025): клики на традиционные результаты 8% с AI Summary vs 15% без него<br>
+        • Ahrefs (300K ключевых слов): присутствие AI Overview коррелирует с −34.5% CTR для топ-1 страницы<br><br>
+        <strong>Специфика BY:</strong> Google — 63.84% поиска в BY, Yandex — 33.81% (Statcounter, апрель 2026). Не Яндекс 60%, как часто предполагают. AI Overview ещё не развёрнут полностью в RU/BY-сегменте. Эффект придёт через оба поисковика с задержкой.<br><br>
+        <strong>Это риск-фактор, не доказанный шок</strong> для BY-рынка в 2025–2026.
+        <div class="tb-sources" style="margin-top:8px">
+          <a href="https://gs.statcounter.com/search-engine-market-share/all-worldwide/belarus/2024" target="_blank">Statcounter BY 2024</a> ·
+          <a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">Ahrefs AI Overview CTR</a> ·
+          <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank">Pew Research</a>
+        </div>
+      </td></tr>
+
+      <tr class="prob-row" onclick="toggleProb(this)">
+        <td>E-com заберёт бюджеты из соцсетей в BY <span class="expand-arrow">▶</span></td>
+        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:0;background:#f87171" data-w="37"></div><span class="prob-val">30–45%</span></div></td>
+        <td><span class="dot r"></span>Низкая</td>
       </tr>
-      <tr>
-        <td>E-com заберёт бюджеты из соцсетей в BY</td>
-        <td><div class="prob-bar-wrap"><div class="prob-bar" style="width:37px;background:#f87171"></div><span class="prob-val">30–45%</span></div></td>
-        <td style="color:#94a3b8;font-size:.7rem">Глобальный тренд реален. BY e-com реклама = $1.79M (2024) — рынок слишком мал</td>
-      </tr>
+      <tr class="prob-detail"><td colspan="3">
+        <strong>Глобальный тренд реален:</strong> Retail media (реклама внутри Amazon, Wildberries, Zalando) — $59.6B в США 2024, +26% YoY. GroupM прогноз: $176B к 2028, обгонит линейное ТВ.<br><br>
+        <strong>BY специфика:</strong> E-commerce реклама в BY = $1.79M (Statista 2024) — это 2.4% рынка. Wildberries и OZON работают, но их рекламные инструменты примитивны по сравнению с Amazon. Тренд придёт, но отставание от глобального — 3–5 лет.<br><br>
+        <strong>Тезис справедлив как долгосрочное направление, но неактуален для горизонта 2025–2026.</strong>
+        <div class="tb-sources" style="margin-top:8px"><a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista BY retail media 2024</a></div>
+      </td></tr>
+
     </tbody>
   </table>
 </div>
 
-<!-- CATEGORY WATCHLIST -->
-<div class="section-label">Category Watchlist — прогноз по каналам</div>
-<div class="card" style="margin-bottom:14px">
-  <h2>Оценка реалистичности восстановления по каналам <span class="badge hi">Chart-derived</span></h2>
-  <div class="watch-grid">
-    <div class="wcard warn">
-      <div class="wname">📺 ТВ</div>
-      <div class="wprob">40–55% · Частичный отскок</div>
-      <div class="wtext">2019: $31M → 2022: $9.6M → 2026F: $27.8M. Восстановление неполное. Бренды, которые давали бюджеты, ушли навсегда. Новые игроки (букмекеры, китайцы) идут в performance.</div>
-    </div>
-    <div class="wcard warn">
-      <div class="wname">🏙 Наружная реклама</div>
-      <div class="wprob">45–60% · Оптимистичный прогноз</div>
-      <div class="wtext">Более мобильный канал чем ТВ. Восстановление возможно, но нужен конкретный драйвер — новые рекламодатели или ивент-повод. Прогноз 2026F выглядит оптимистично.</div>
-    </div>
-    <div class="wcard bad">
-      <div class="wname">📰 Пресса</div>
-      <div class="wprob">15–25% · Структурная слабость</div>
-      <div class="wtext">2019: $4.5M → 2022: $1.4M → 2026F: $1.5M. Фактически списана. Закрытие независимых СМИ в 2021 убрало ключевых рекламных носителей. Восстановление маловероятно.</div>
-    </div>
-    <div class="wcard unknown">
-      <div class="wname">❓ Прочее («Other»)</div>
-      <div class="wprob">20–40% · Риск методологии</div>
-      <div class="wtext">В исторических данных 2016–2024 — мелкая категория или n/a. В прогнозе 2025–2026F становится материальной. Риск: «мусорная корзина» для балансировки суммы до нужной цифры.</div>
-    </div>
-  </div>
-</div>
+<!-- THESIS ACCORDION -->
+<div class="sl">Разбор тезисов поста — нажмите для раскрытия</div>
+<div class="thesis-list">
 
-<!-- SEARCH & AI RISK -->
-<div class="section-label">Search & AI риск</div>
-<div class="search-row">
-  <div class="card">
-    <h2>Поисковый рынок Беларуси <span class="badge mid">Statcounter Apr 2026</span></h2>
-    <div class="ch h200"><canvas id="c6"></canvas></div>
-    <p style="font-size:.7rem;color:#475569;margin-top:10px;line-height:1.5">
-      Google — крупнейший поисковик (64%). Yandex стратегически значим (34%).
-      AI-риск придёт через оба канала, но с разным таймингом.
-    </p>
+  <div class="thesis-item warn" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">⚠️</div>
+      <div class="th-meta">
+        <div class="th-claim">«2020 — ковид и протесты поставили всё на паузу»</div>
+        <div class="th-verdict">ВЕРНО, НО «ПАУЗА» НЕДООЦЕНИВАЕТ ПОСЛЕДСТВИЯ</div>
+      </div>
+      <div class="th-prob">75–85%</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Что подтверждают данные</div>
+          <div class="tbb-text">2020: рынок −18% ($108M→$88.9M). Шок реальный. 2021: −4% (закрытие медиа, заморозка бюджетов). Оба года — часть единого процесса.</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">Что упускает пост</div>
+          <div class="tbb-text">«Пауза» подразумевает возобновление. На самом деле 2020 запустил <strong>необратимую цепочку</strong>: изоляция → уход брендов 2022 (−24%) — хуже самого 2020. 2022 = прямое следствие 2020, не отдельный шок.</div>
+        </div>
+      </div>
+      <div class="tb-change">
+        <div class="tbb-label">Что изменило бы оценку</div>
+        <div class="tbb-text">Если бы западные бренды вернулись — тезис «пауза» подтвердился бы. По состоянию на 2024 этого не произошло и не ожидается.</div>
+      </div>
+    </div>
   </div>
-  <div class="card">
-    <h2>Данные об AI и кликах <span class="badge mid">Pew Research · Ahrefs</span></h2>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
-      <div style="background:#0f1a1a;border:1px solid #38bdf822;border-radius:8px;padding:12px">
-        <div class="blue" style="font-size:1.4rem;font-weight:800;line-height:1">8% vs 15%</div>
-        <div style="font-size:.7rem;color:#94a3b8;margin-top:4px;line-height:1.5">Кликов на традиционные результаты при наличии AI Summary vs без него (Pew Research, 900 пользователей, март 2025)</div>
+
+  <div class="thesis-item warn" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">⚠️</div>
+      <div class="th-meta">
+        <div class="th-claim">«Доля интернета растёт — digital побеждает»</div>
+        <div class="th-verdict">DENOMINATOR EFFECT — доля верна, нарратив вводит в заблуждение</div>
       </div>
-      <div style="background:#0f1a1a;border:1px solid #38bdf822;border-radius:8px;padding:12px">
-        <div class="orange" style="font-size:1.4rem;font-weight:800;line-height:1">−34.5%</div>
-        <div style="font-size:.7rem;color:#94a3b8;margin-top:4px;line-height:1.5">CTR для топ-1 страницы при наличии AI Overview на информационных запросах (Ahrefs, 300K ключевых слов)</div>
+      <div class="th-prob">—</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Что произошло в 2022</div>
+          <div class="tbb-text">Интернет: <strong style="color:#f87171">$39.2M → $36.1M (−8%)</strong><br>Традиционные: <strong style="color:#f87171">$46.5M → $28.8M (−38%)</strong><br>Доля интернета: <strong style="color:#4ade80">46% → 55% (+9pp)</strong><br><br>Доля выросла потому что знаменатель (рынок) рухнул сильнее числителя (интернет).</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">Долгосрочный тренд vs 2022</div>
+          <div class="tbb-text">Долгосрочный рост доли с 26% (2016) до 55% (2024) — <strong>реальный и структурный</strong>. Но конкретный скачок 2022 — механический артефакт, не рост спроса на digital. Важно разделять эти два явления при анализе.</div>
+        </div>
       </div>
-      <div style="background:#1a1412;border:1px solid #fb923c22;border-radius:8px;padding:12px">
-        <div style="font-size:.72rem;color:#94a3b8;line-height:1.6">
-          <strong style="color:#fb923c">Для Беларуси:</strong> AI Overview ещё не развёрнут в полную силу на RU-рынке.
-          Эффект реален, но его масштаб и сроки для BY — неизвестны. Мониторить, не паниковать.
+      <div class="tb-change">
+        <div class="tbb-label">Как следует читать этот показатель</div>
+        <div class="tbb-text">Доля — индикатор структуры рынка. Абсолютные расходы — индикатор здоровья рынка. Оба нужны. Интернет-реклама в BY в 2024 ($40.9M) всё ещё ниже пика 2019 ($45.1M) — несмотря на 55% долю.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thesis-item ok" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">✅</div>
+      <div class="th-meta">
+        <div class="th-claim">«2022 — уход Samsung, Bosch, LG, VW, Kia, Mars и др.»</div>
+        <div class="th-verdict">ПОДТВЕРЖДАЕТСЯ ДАННЫМИ НАПРЯМУЮ</div>
+      </div>
+      <div class="th-prob">90%+</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Что видно в данных</div>
+          <div class="tbb-text">Традиционные каналы (ТВ, OOH, радио, пресса) — основные носители имиджевой рекламы крупных брендов — за 2022 потеряли <strong>$17.7M</strong>. Это прямой след ухода имиджевых рекламодателей.</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">Структурный характер потери</div>
+          <div class="tbb-text">К 2024 традиционные каналы восстановились лишь до $32.9M vs $62.9M в 2019 (−48% от пика). Новые рекламодатели (букмекеры, Ru-бренды, китайцы) компенсируют объём, но не структуру — они идут в performance, не в ТВ.</div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- THESIS ANALYSIS -->
-<div class="section-label">Разбор тезисов поста</div>
-<div class="thesis-grid">
-  <div class="thesis warn">
-    <div class="claim">«2020 — ковид и протесты поставили всё на паузу»</div>
-    <div class="verdict">⚠️ ВЕРНО, НО «ПАУЗА» НЕДООЦЕНИВАЕТ ПОСЛЕДСТВИЯ</div>
-    <div class="why">Цепочка: 2020 протесты → политическая изоляция → 2022 уход брендов (−24%). 2020 запустил необратимый процесс, а не временный стоп. Сам по себе 2020 год (−18%) менее разрушителен, чем 2022 (−24%).</div>
-  </div>
-  <div class="thesis warn">
-    <div class="claim">«Доля интернета растёт — digital побеждает»</div>
-    <div class="verdict">⚠️ SURVIVORSHIP BIAS — доля верна, нарратив ложный</div>
-    <div class="why">2022: интернет −8% в деньгах, традиционные −38%. Доля выросла из-за denominator effect. Долгосрочный тренд роста доли реален. Но 2022 скачок — это не сила digital, это слабость конкурента.</div>
-  </div>
-  <div class="thesis ok">
-    <div class="claim">«2022 — уход Samsung, Bosch, LG, VW, Kia, Mars и др.»</div>
-    <div class="verdict">✅ ПОДТВЕРЖДАЕТСЯ ДАННЫМИ</div>
-    <div class="why">Традиционные каналы (основные носители имиджевой рекламы брендов) рухнули с $46.5M до $28.8M за один год. Это $17.7M испарившихся бюджетов — прямое следствие ухода западных брендов.</div>
-  </div>
-  <div class="thesis bad">
-    <div class="claim">«2025–2026 — рынок превысит $100M»</div>
-    <div class="verdict">❌ ПРОГНОЗ +39% НЕ ОБОСНОВАН</div>
-    <div class="why">Польша в 2024: +17.8%, Латвия: +7.6%, Чехия: +7.7% (IAB Europe). Ни один сопоставимый рынок не рос на +39% без специфического драйвера. Реалистичная оценка 2025: $80–90M.</div>
-    <div class="src"><a href="https://knowledge-hub.iab.gr/storage/uploads/article-files/iab-europe-adex-benchmark-2024-final-4Dm6.pdf" target="_blank">IAB Europe AdEx Benchmark 2024</a></div>
-  </div>
-  <div class="thesis warn">
-    <div class="claim">«AI и Google перераспределят трафик»</div>
-    <div class="verdict">⚠️ ВЕРНО ГЛОБАЛЬНО — для BY неопределённые сроки</div>
-    <div class="why">Google занимает 63.84% поиска в BY (не Яндекс 60% как часто предполагают). AI Overview снижает CTR на 34.5% (Ahrefs). Но AI-функции ещё не развёрнуты в полную силу в RU/BY-сегменте. Риск реален, таймлайн — открытый вопрос.</div>
-    <div class="src">
-      <a href="https://gs.statcounter.com/search-engine-market-share/all-worldwide/belarus/2024" target="_blank">Statcounter BY 2024</a> ·
-      <a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">Ahrefs AI Overview CTR</a>
+  <div class="thesis-item bad" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">❌</div>
+      <div class="th-meta">
+        <div class="th-claim">«2025–2026 — рынок превысит $100M»</div>
+        <div class="th-verdict">ПРОГНОЗ +39% YoY НЕ ОБОСНОВАН ДАННЫМИ</div>
+      </div>
+      <div class="th-prob">25–35%</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Арифметика прогноза</div>
+          <div class="tbb-text">2024: $73.8M → 2025F: $102.5M = <strong style="color:#f87171">+38.9% YoY</strong><br>CAGR 2024–2026F: <strong style="color:#f87171">+29.4%</strong><br><br>Это требуется два года подряд без перерыва.</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">Региональные бенчмарки (IAB Europe 2024)</div>
+          <div class="tbb-text">Польша (быстрейший рынок CEE): <strong>+17.8%</strong><br>Латвия: <strong>+7.6%</strong><br>Чехия: <strong>+7.7%</strong><br>Европа в целом: <strong>+16.0%</strong> (+12.5% без Турции)<br><br>BY прогноз в 2–5× быстрее лучших рынков.</div>
+        </div>
+      </div>
+      <div class="tb-change">
+        <div class="tbb-label">Реалистичная альтернативная оценка</div>
+        <div class="tbb-text">При сохранении темпа 2023–2024 (+5–8%/год): 2025 ≈ $78–80M, 2026 ≈ $84–87M. Для $100M в 2025 нужен идентифицируемый новый крупный источник бюджетов — он в посте не назван.</div>
+      </div>
+      <div class="tb-sources"><a href="https://knowledge-hub.iab.gr/storage/uploads/article-files/iab-europe-adex-benchmark-2024-final-4Dm6.pdf" target="_blank">IAB Europe AdEx Benchmark 2024</a></div>
     </div>
   </div>
-  <div class="thesis warn">
-    <div class="claim">«E-commerce заберёт бюджеты из соцсетей»</div>
-    <div class="verdict">⚠️ ГЛОБАЛЬНО ВЕРНО — для BY преждевременно</div>
-    <div class="why">Retail media глобально: $59.6B США 2024, +26% YoY. GroupM прогноз $176B к 2028. Для BY: e-com реклама = $1.79M (2024), 2.4% рынка. Тренд реален, отставание — 3–5 лет.</div>
-    <div class="src"><a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista BY retail media 2024</a></div>
+
+  <div class="thesis-item warn" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">⚠️</div>
+      <div class="th-meta">
+        <div class="th-claim">«AI и Google перераспределят трафик, SEO пострадает»</div>
+        <div class="th-verdict">ВЕРНО ГЛОБАЛЬНО — для BY неопределённые сроки и механика</div>
+      </div>
+      <div class="th-prob">55–70%</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Глобальные данные (верифицированные)</div>
+          <div class="tbb-text">• Pew Research (март 2025): клики при AI Summary = <strong>8%</strong> vs без него = <strong>15%</strong><br>• Ahrefs (300K ключей): AI Overview → <strong>−34.5% CTR</strong> топ-1<br>• HubSpot потерял 70–80% органики 2024–2025</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">BY-специфика</div>
+          <div class="tbb-text">Google в BY: <strong>63.84%</strong> поиска<br>Yandex в BY: <strong>33.81%</strong> (Statcounter, апрель 2026)<br><br>Не «Яндекс 60%» — Google доминирует. AI Overview ещё не развёрнут в полную силу в RU/BY-сегменте. Эффект реальный, таймлайн открытый.</div>
+        </div>
+      </div>
+      <div class="tb-change">
+        <div class="tbb-label">Статус для BY</div>
+        <div class="tbb-text">Это риск-фактор, требующий мониторинга — не доказанный шок для рынка 2025–2026. Компании с прямой аудиторией (email, retention, e-com) выиграют. SEO-зависимые медиа и агрегаторы — под угрозой.</div>
+      </div>
+      <div class="tb-sources">
+        <a href="https://gs.statcounter.com/search-engine-market-share/all-worldwide/belarus/2024" target="_blank">Statcounter BY</a> ·
+        <a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">Ahrefs</a> ·
+        <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank">Pew Research</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="thesis-item warn" onclick="toggleThesis(this)">
+    <div class="thesis-header">
+      <div class="th-icon">⚠️</div>
+      <div class="th-meta">
+        <div class="th-claim">«Инвестиции переместятся из соцсетей в e-commerce»</div>
+        <div class="th-verdict">ГЛОБАЛЬНЫЙ ТРЕНД РЕАЛЕН — BY отстаёт на 3–5 лет</div>
+      </div>
+      <div class="th-prob">30–45%</div>
+      <div class="th-arrow">▶</div>
+    </div>
+    <div class="thesis-body">
+      <div class="tb-grid">
+        <div class="tb-block highlight">
+          <div class="tbb-label">Глобальный тренд (retail media)</div>
+          <div class="tbb-text">США 2024: retail media = <strong>$59.6B (+26% YoY)</strong><br>GroupM прогноз 2028: <strong>$176B</strong> — обгонит линейное ТВ<br><br>Логика: реклама там, где происходит покупка (Amazon, Wildberries, Zalando).</div>
+        </div>
+        <div class="tb-block">
+          <div class="tbb-label">BY реальность</div>
+          <div class="tbb-text">E-commerce реклама BY 2024: <strong>$1.79M</strong> (Statista) = 2.4% рынка.<br>Wildberries и OZON работают, рекламные инструменты — примитивные.<br><br>Тренд придёт, но не в горизонте 2025–2026.</div>
+        </div>
+      </div>
+      <div class="tb-sources"><a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista BY retail media 2024</a></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WATCHLIST -->
+<div class="sl">Category Watchlist — нажмите для деталей</div>
+<div class="watch-grid" style="margin-bottom:14px">
+  <div class="wcard warn" onclick="toggleWatch(this)">
+    <div class="wcard-header">
+      <div class="wname">📺 ТВ <span class="wa">▶</span></div>
+      <div class="wprob">40–55% · Частичный отскок</div>
+      <div class="wshort">2019: $31M → 2022: $9.6M → 2026F: $27.8M</div>
+    </div>
+    <div class="wcard-body">Восстановление до $27.8M возможно, но до уровня 2019 ($31M) — нет. Бренды-имиджевики ушли, новые рекламодатели (букмекеры, китайцы) предпочитают digital. ТВ-реклама в BY остаётся уделом локальных и государственных рекламодателей.</div>
+  </div>
+  <div class="wcard warn" onclick="toggleWatch(this)">
+    <div class="wcard-header">
+      <div class="wname">🏙 Наружная реклама <span class="wa">▶</span></div>
+      <div class="wprob">45–60% · Оптимистично</div>
+      <div class="wshort">Более мобильный канал чем ТВ</div>
+    </div>
+    <div class="wcard-body">Физическая инфраструктура никуда не ушла, формат не привязан к конкретным брендам. Частичное восстановление реально при общем росте рынка. Но прогноз 2026F выглядит оптимистично без конкретного катализатора.</div>
+  </div>
+  <div class="wcard bad" onclick="toggleWatch(this)">
+    <div class="wcard-header">
+      <div class="wname">📰 Пресса <span class="wa">▶</span></div>
+      <div class="wprob">15–25% · Структурная слабость</div>
+      <div class="wshort">2019: $4.5M → 2022: $1.4M → 2026F: ~$1.5M</div>
+    </div>
+    <div class="wcard-body">Фактически выведена из уравнения. Закрытие независимых СМИ в 2021 убрало ключевых рекламных носителей. Оставшиеся государственные издания имеют ограниченную рекламную привлекательность. Восстановление до значимых размеров маловероятно.</div>
+  </div>
+  <div class="wcard grey" onclick="toggleWatch(this)">
+    <div class="wcard-header">
+      <div class="wname">❓ Прочее (Other) <span class="wa">▶</span></div>
+      <div class="wprob">20–40% · Риск методологии</div>
+      <div class="wshort">Мала в истории, материальна в прогнозе</div>
+    </div>
+    <div class="wcard-body">В исторических данных 2016–2024 категория «Other» либо незначительна, либо n/a. В прогнозе 2025–2026F она становится материальной. Это может означать: реальный рост новых форматов (подкасты, gaming, DOOH) — или методологический «балансир» для получения нужной итоговой суммы. Требует уточнения источника.</div>
   </div>
 </div>
 
-<!-- FORECAST TABLE -->
-<div class="section-label">Оценка прогноза по категориям</div>
-<div class="card" style="margin-bottom:14px">
-  <h2>Детальный разбор прогноза 2025–2026F</h2>
-  <table class="fc-table">
-    <thead><tr><th>Категория</th><th>Прогноз</th><th>Вероятность</th><th>Обоснование</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Рынок 2025F +39%</strong></td><td>$102.5M</td><td><span class="dot r"></span>25–35%</td><td>Нет прецедента в регионе. IAB Europe: лучшие рынки +17.8%</td></tr>
-      <tr><td><strong>Рынок 2026F +21%</strong></td><td>$123.6M</td><td><span class="dot y"></span>30–45%</td><td>Реалистичнее, но только при успешном 2025</td></tr>
-      <tr><td><strong>Интернет 2026F</strong></td><td>$67.4M</td><td><span class="dot y"></span>45–60%</td><td>Структурный тренд поддерживает, но нужен выход из 4-летней стагнации</td></tr>
-      <tr><td><strong>Доля интернета 55%+</strong></td><td>Удержание</td><td><span class="dot g"></span>75–85%</td><td>Необратимый сдвиг. Западные бренды не вернутся</td></tr>
-      <tr><td><strong>ТВ восстановление</strong></td><td>$27.8M</td><td><span class="dot y"></span>40–55%</td><td>Частичный отскок возможен, до 2019 ($31M) — нет</td></tr>
-      <tr><td><strong>Пресса</strong></td><td>~$1.5M</td><td><span class="dot r"></span>15–25%</td><td>Структурно слабый канал, независимые СМИ закрыты</td></tr>
-      <tr><td><strong>Категория «Other»</strong></td><td>~$7.9M</td><td><span class="dot r"></span>20–40%</td><td>⚠️ Риск методологии: минимальна в истории, материальна в прогнозе</td></tr>
-      <tr><td><strong>Performance > Brand</strong></td><td>Доминирование</td><td><span class="dot g"></span>85–90%</td><td>Новые рекламодатели (букмекеры, e-com, китайцы) — performance-oriented</td></tr>
-    </tbody>
-  </table>
+<!-- AI RISK SECTION -->
+<div class="sl">Search & AI риск</div>
+<div class="ai-grid">
+  <div class="card">
+    <h2>Поисковый рынок Беларуси <span class="badge mid">Statcounter апрель 2026</span></h2>
+    <div class="ch h200"><canvas id="c6"></canvas></div>
+    <p style="font-size:.7rem;color:#475569;margin-top:10px;line-height:1.5">Google — крупнейший поисковик BY (64%). Yandex стратегически значим (34%). AI-риск придёт через оба канала с разным таймингом.</p>
+  </div>
+  <div class="card">
+    <h2>Данные о влиянии AI на клики <span class="badge mid">Pew + Ahrefs</span></h2>
+    <div class="stat-pill">
+      <div class="sp-val blue">8% vs 15%</div>
+      <div class="sp-txt">Кликов на обычные результаты при AI Summary vs без него (Pew Research, 900 пользователей США, март 2025)</div>
+      <div class="sp-src"><a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank">pewresearch.org →</a></div>
+    </div>
+    <div class="stat-pill">
+      <div class="sp-val orange">−34.5% CTR</div>
+      <div class="sp-txt">Для топ-1 страницы при наличии AI Overview на информационных запросах (Ahrefs, 300K ключевых слов)</div>
+      <div class="sp-src"><a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">ahrefs.com →</a></div>
+    </div>
+    <div style="background:#1a1412;border:1px solid #fb923c22;border-radius:8px;padding:12px;margin-top:8px">
+      <div style="font-size:.7rem;color:#94a3b8;line-height:1.6"><strong style="color:#fb923c">Для BY:</strong> AI Overview не развёрнут в полную силу в RU/BY. Эффект реальный — таймлайн открытый. Мониторить, не закладывать как факт в 2025–2026.</div>
+    </div>
+  </div>
 </div>
 
 <!-- TIMELINE -->
-<div class="section-label">Хронология</div>
+<div class="sl">Хронология</div>
 <div class="tl">
   <div class="te"><div class="ty">2016</div><div class="tv">$72.9M · 26%</div><div class="tt">База. Интернет набирает долю</div></div>
   <div class="te"><div class="ty">2017</div><div class="tv">$87.3M · 33%</div><div class="tt">Интернет +53% YoY</div></div>
   <div class="te"><div class="ty">2018</div><div class="tv">$98.8M · 36%</div><div class="tt">Рост к $100M</div></div>
   <div class="te"><div class="ty">2019</div><div class="tv">$108.0M · 42%</div><div class="tt">Исторический пик</div></div>
-  <div class="te shock"><div class="ty">2020</div><div class="tv">$88.9M · 46%</div><div class="tt">COVID + протесты. Запуск цепочки</div></div>
+  <div class="te shock"><div class="ty">2020</div><div class="tv">$88.9M · 46%</div><div class="tt">COVID + протесты. Запуск цепочки событий</div></div>
   <div class="te shock"><div class="ty">2021</div><div class="tv">$85.7M · 46%</div><div class="tt">Закрытие медиа −4%</div></div>
   <div class="te shock"><div class="ty">2022</div><div class="tv">$64.9M · 55%</div><div class="tt">Реальный обвал −24%. Традиционные −38%</div></div>
   <div class="te"><div class="ty">2023</div><div class="tv">$68.1M · 54%</div><div class="tt">Букмекеры и RU +5%</div></div>
@@ -491,46 +694,74 @@
 </div>
 
 <div class="footer">
-  Данные: arobelarus (chart, German Golub LinkedIn) ·
+  Данные: arobelarus (chart) ·
   <a href="https://knowledge-hub.iab.gr/storage/uploads/article-files/iab-europe-adex-benchmark-2024-final-4Dm6.pdf" target="_blank">IAB Europe AdEx 2024</a> ·
   <a href="https://gs.statcounter.com/search-engine-market-share/all-worldwide/belarus/2024" target="_blank">Statcounter BY</a> ·
-  <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank">Pew Research AI clicks</a> ·
-  <a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">Ahrefs AI Overview CTR</a> ·
-  <a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista BY retail media</a><br>
-  Dashboard: ClaudeClaw + Codex · 2026-05-24
+  <a href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank">Pew Research</a> ·
+  <a href="https://ahrefs.com/blog/ai-overviews-reduce-clicks/" target="_blank">Ahrefs</a> ·
+  <a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista BY</a><br>
+  ClaudeClaw + CodexClaw · 2026-05-24
 </div>
 
 </div>
+
 <script>
+// ── DATA ──
 const Y=['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025F','2026F'];
-const tot=[72.9,87.3,98.8,108.0,88.9,85.7,64.9,68.1,73.8,102.5,123.6];
-const net=[18.9,28.9,35.2,45.1,40.5,39.2,36.1,36.9,40.9,53.3,67.4];
-const trad=tot.map((t,i)=>+(t-net[i]).toFixed(1));
+const tot_post=[72.9,87.3,98.8,108.0,88.9,85.7,64.9,68.1,73.8,102.5,123.6];
+const tot_base=[72.9,87.3,98.8,108.0,88.9,85.7,64.9,68.1,73.8,85.0,100.0];
+const tot_cons=[72.9,87.3,98.8,108.0,88.9,85.7,64.9,68.1,73.8,78.0,87.0];
+const net_post=[18.9,28.9,35.2,45.1,40.5,39.2,36.1,36.9,40.9,53.3,67.4];
+const net_base=[18.9,28.9,35.2,45.1,40.5,39.2,36.1,36.9,40.9,46.0,55.0];
+const net_cons=[18.9,28.9,35.2,45.1,40.5,39.2,36.1,36.9,40.9,43.0,48.0];
 const shr=[26,33,36,42,46,46,55,54,55,52,55];
 const yM=[null,20,13,9,-18,-4,-24,5,8,39,21];
 const yN=[null,53,22,28,-10,-3,-8,2,11,30,27];
+
+const scnLabels={
+  post:'Оригинальный прогноз из поста: 2025F=$102.5M (+39%), 2026F=$123.6M (+21%)',
+  base:'Базовый сценарий: 2025=$85M (+15%), 2026=$100M (+18%) — при сохранении умеренного роста',
+  cons:'Консервативный: 2025=$78M (+6%), 2026=$87M (+12%) — если темп 2023–2024 сохранится'
+};
+
 const isFc=i=>i>=9;
 const G='#1e2d45',T='#475569';
 const BLUE='#38bdf8',GREEN='#4ade80',RED='#f87171',ORA='#fb923c',PUR='#a78bfa';
 
-const base=()=>({responsive:true,maintainAspectRatio:false,
-  plugins:{legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}}},
-  scales:{x:{ticks:{color:T,font:{size:10}},grid:{color:G}},y:{ticks:{color:T},grid:{color:G}}}
+// ── CHART 1 (stacked, scenario-aware) ──
+const getTrad=(netArr,totArr)=>totArr.map((t,i)=>+(t-netArr[i]).toFixed(1));
+let c1chart=new Chart(document.getElementById('c1'),{type:'bar',
+  data:{labels:Y,datasets:[
+    {label:'Интернет-реклама',data:net_post,backgroundColor:Y.map((_,i)=>isFc(i)?BLUE+'77':BLUE+'cc'),stack:'a'},
+    {label:'Традиционные каналы',data:getTrad(net_post,tot_post),backgroundColor:Y.map((_,i)=>isFc(i)?PUR+'44':PUR+'88'),stack:'a'}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}},
+      tooltip:{callbacks:{footer:items=>{const i=items[0].dataIndex;const t=c1chart.data.datasets[0].data[i]+c1chart.data.datasets[1].data[i];return`Итого: $${t.toFixed(1)}M`}}}
+    },
+    scales:{
+      x:{stacked:true,ticks:{color:T,font:{size:10}},grid:{color:G}},
+      y:{stacked:true,ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}
+    }
+  }
 });
 
-// C1 stacked
-new Chart(document.getElementById('c1'),{type:'bar',data:{labels:Y,datasets:[
-  {label:'Интернет-реклама',data:net,backgroundColor:Y.map((_,i)=>isFc(i)?BLUE+'77':BLUE+'cc'),stack:'a'},
-  {label:'Традиционные каналы',data:trad,backgroundColor:Y.map((_,i)=>isFc(i)?PUR+'44':PUR+'88'),stack:'a'}
-]},options:{...base(),plugins:{
-  legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}},
-  tooltip:{callbacks:{footer:items=>`Итого: $${tot[items[0].dataIndex]}M`}}
-},scales:{
-  x:{stacked:true,ticks:{color:T,font:{size:10}},grid:{color:G}},
-  y:{stacked:true,ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}
-}}});
+function setScenario(scn,btn){
+  document.querySelectorAll('.scn-btn').forEach(b=>{b.classList.remove('active','warn','bad')});
+  btn.classList.add('active');
+  if(scn==='base')btn.classList.add('warn');
+  if(scn==='cons')btn.classList.add('bad');
+  const nets={post:net_post,base:net_base,cons:net_cons};
+  const tots={post:tot_post,base:tot_base,cons:tot_cons};
+  const n=nets[scn],t=tots[scn];
+  c1chart.data.datasets[0].data=n;
+  c1chart.data.datasets[1].data=getTrad(n,t);
+  c1chart.update();
+  document.getElementById('scn-label').textContent=scnLabels[scn];
+}
 
-// C2 share
+// ── CHART 2 share ──
 new Chart(document.getElementById('c2'),{type:'line',data:{labels:Y,datasets:[{
   label:'Доля интернета %',data:shr,borderColor:BLUE,backgroundColor:BLUE+'18',fill:true,tension:.35,
   pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:BLUE),pointRadius:4
@@ -539,7 +770,7 @@ new Chart(document.getElementById('c2'),{type:'line',data:{labels:Y,datasets:[{
   scales:{x:{ticks:{color:T,font:{size:9}},grid:{color:G}},y:{min:0,max:70,ticks:{color:T,callback:v=>v+'%'},grid:{color:G}}}
 }});
 
-// C3 yoy
+// ── CHART 3 yoy ──
 new Chart(document.getElementById('c3'),{type:'bar',data:{labels:Y.slice(1),datasets:[
   {label:'Рынок',data:yM.slice(1),backgroundColor:yM.slice(1).map(v=>v>=0?GREEN+'99':RED+'99'),borderRadius:3},
   {label:'Интернет',data:yN.slice(1),backgroundColor:yN.slice(1).map(v=>v>=0?BLUE+'99':ORA+'99'),borderRadius:3}
@@ -548,37 +779,58 @@ new Chart(document.getElementById('c3'),{type:'bar',data:{labels:Y.slice(1),data
   scales:{x:{ticks:{color:T,font:{size:9}},grid:{color:G}},y:{ticks:{color:T,callback:v=>v+'%'},grid:{color:G}}}
 }});
 
-// C4 split area
+// ── CHART 4 split ──
 new Chart(document.getElementById('c4'),{type:'line',data:{labels:Y,datasets:[
-  {label:'Интернет $M',data:net,borderColor:BLUE,backgroundColor:BLUE+'22',fill:true,tension:.35,
+  {label:'Интернет $M',data:net_post,borderColor:BLUE,backgroundColor:BLUE+'22',fill:true,tension:.35,
    pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:BLUE),pointRadius:4},
-  {label:'Традиционные $M',data:trad,borderColor:PUR,backgroundColor:PUR+'22',fill:true,tension:.35,
+  {label:'Традиционные $M',data:getTrad(net_post,tot_post),borderColor:PUR,backgroundColor:PUR+'22',fill:true,tension:.35,
    pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:PUR),pointRadius:4}
-]},options:{...base(),scales:{
-  x:{ticks:{color:T,font:{size:10}},grid:{color:G}},
-  y:{ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}
-}}});
+]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}}},
+  scales:{x:{ticks:{color:T,font:{size:10}},grid:{color:G}},y:{ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}}
+}});
 
-// C5 per-capita
+// ── CHART 5 per capita ──
 new Chart(document.getElementById('c5'),{type:'bar',data:{
   labels:['Чехия (ЕС)','Латвия (ЕС)','Польша (ЕС)','Казахстан (СНГ)','Азербайджан (СНГ)','Беларусь'],
-  datasets:[{label:'$/чел (Statista 2024)',data:[146,80,57,28,27,8],
+  datasets:[{data:[146,80,57,28,27,8],
     backgroundColor:['#38bdf8cc','#38bdf8aa','#38bdf888','#a78bfa99','#a78bfa77','#f87171cc'],borderRadius:5}]
 },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
   plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`$${ctx.parsed.x}/чел`}}},
   scales:{x:{ticks:{color:T,callback:v=>'$'+v},grid:{color:G}},y:{ticks:{color:'#cbd5e1',font:{size:11}},grid:{color:G}}}
 }});
 
-// C6 search share donut
+// ── CHART 6 search donut ──
 new Chart(document.getElementById('c6'),{type:'doughnut',data:{
   labels:['Google 63.84%','Yandex 33.81%','Другие 2.35%'],
   datasets:[{data:[63.84,33.81,2.35],
     backgroundColor:['#38bdf8cc','#f87171aa','#47556966'],
     borderColor:['#38bdf8','#f87171','#475569'],borderWidth:1}]
-},options:{responsive:true,maintainAspectRatio:false,
-  plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11},boxWidth:14,padding:12}}},
-  cutout:'65%'
+},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+  plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11},boxWidth:14,padding:10}}}
 }});
+
+// ── INTERACTIONS ──
+function toggleThesis(el){el.classList.toggle('expanded')}
+
+function toggleProb(row){
+  const detail=row.nextElementSibling;
+  const isOpen=detail.classList.contains('open');
+  document.querySelectorAll('.prob-detail.open').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.prob-row.open').forEach(r=>r.classList.remove('open'));
+  if(!isOpen){detail.classList.add('open');row.classList.add('open')}
+}
+
+function toggleWatch(el){el.classList.toggle('expanded')}
+
+// ── ANIMATE PROB BARS ON LOAD ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.prob-bar[data-w]').forEach(bar=>{
+      bar.style.width=bar.dataset.w+'px';
+    });
+  },300);
+});
 </script>
 </body>
 </html>
