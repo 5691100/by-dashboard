@@ -1,538 +1,406 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Рекламный рынок Беларуси 2016–2026</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Рекламный рынок Беларуси 2016–2026 · Анализ</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0d1117;
-      color: #e2e8f0;
-      min-height: 100vh;
-      padding: 28px 20px;
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#e2e8f0;padding:24px 20px;min-height:100vh}
 
-    /* ─── HEADER ─── */
-    .header { text-align: center; margin-bottom: 28px; }
-    .header h1 { font-size: 1.6rem; font-weight: 800; color: #fff; max-width: 720px; margin: 0 auto 6px; line-height: 1.3; }
-    .header p { font-size: 0.78rem; color: #475569; }
+    /* HEADER */
+    .hdr{text-align:center;margin-bottom:28px}
+    .hdr h1{font-size:1.55rem;font-weight:800;color:#fff;max-width:760px;margin:0 auto 6px;line-height:1.3}
+    .hdr p{font-size:.75rem;color:#475569}
 
-    /* ─── KPI ROW ─── */
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      max-width: 1140px;
-      margin: 0 auto 24px;
-    }
-    @media(max-width:900px){ .kpi-row{ grid-template-columns: repeat(3,1fr); } }
-    @media(max-width:520px){ .kpi-row{ grid-template-columns: repeat(2,1fr); } }
-    .kpi {
-      background: #161b27;
-      border: 1px solid #1e2d45;
-      border-radius: 12px;
-      padding: 16px 14px;
-      text-align: center;
-    }
-    .kpi .val { font-size: 1.7rem; font-weight: 800; line-height: 1; }
-    .kpi .lbl { font-size: 0.7rem; color: #64748b; margin-top: 5px; line-height: 1.4; }
-    .kpi .sub { font-size: 0.65rem; color: #475569; margin-top: 3px; }
-    .blue  { color: #38bdf8; }
-    .red   { color: #f87171; }
-    .green { color: #4ade80; }
-    .orange{ color: #fb923c; }
+    /* LAYOUT */
+    .wrap{max-width:1160px;margin:0 auto}
+    .row2{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px}
+    .row2eq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+    @media(max-width:900px){.row2,.row2eq,.row3{grid-template-columns:1fr}}
 
-    /* ─── GRID ─── */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 16px;
-      max-width: 1140px;
-      margin: 0 auto 16px;
-    }
-    .grid-2-equal {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      max-width: 1140px;
-      margin: 0 auto 16px;
-    }
-    @media(max-width:768px){ .grid-2,.grid-2-equal{ grid-template-columns:1fr; } }
+    /* KPI */
+    .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
+    @media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
+    .kpi{background:#161b27;border:1px solid #1e2d45;border-radius:10px;padding:14px 12px;text-align:center}
+    .kpi .v{font-size:1.6rem;font-weight:800;line-height:1}
+    .kpi .l{font-size:.68rem;color:#64748b;margin-top:5px;line-height:1.4}
+    .kpi .s{font-size:.62rem;color:#3d5470;margin-top:3px}
+    .blue{color:#38bdf8}.red{color:#f87171}.green{color:#4ade80}.orange{color:#fb923c}.purple{color:#a78bfa}
 
-    .card {
-      background: #161b27;
-      border: 1px solid #1e2d45;
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .card h2 {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 14px;
-    }
-    .ch { position: relative; }
-    .ch-tall  { height: 320px; }
-    .ch-med   { height: 200px; }
-    .ch-short { height: 160px; }
+    /* CARD */
+    .card{background:#161b27;border:1px solid #1e2d45;border-radius:10px;padding:18px}
+    .card h2{font-size:.7rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+    .ch{position:relative}
+    .h320{height:320px}.h220{height:220px}.h180{height:180px}.h200{height:200px}
 
-    /* ─── INSIGHTS ─── */
-    .insights {
-      max-width: 1140px;
-      margin: 0 auto 16px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
-    }
-    .insight {
-      background: #161b27;
-      border: 1px solid #1e2d45;
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      gap: 12px;
-    }
-    .insight .icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
-    .insight .body {}
-    .insight .title { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
-    .insight .desc  { font-size: 0.75rem; color: #94a3b8; line-height: 1.5; }
-    .insight.warn  { border-color: #f87171; }
-    .insight.good  { border-color: #4ade80; }
-    .insight.focus { border-color: #38bdf8; }
-    .insight.caution { border-color: #fb923c; }
+    /* THESIS */
+    .thesis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-bottom:14px}
+    .thesis{background:#161b27;border:1px solid #1e2d45;border-radius:10px;padding:16px;display:flex;gap:12px}
+    .thesis.ok  {border-left:3px solid #4ade80}
+    .thesis.warn{border-left:3px solid #fb923c}
+    .thesis.bad {border-left:3px solid #f87171}
+    .thesis .badge{flex-shrink:0;font-size:1.2rem;line-height:1;margin-top:2px;width:24px;text-align:center}
+    .thesis .claim{font-size:.75rem;font-weight:700;color:#cbd5e1;margin-bottom:5px;font-style:italic}
+    .thesis .verdict{font-size:.72rem;font-weight:700;margin-bottom:4px}
+    .thesis.ok   .verdict{color:#4ade80}
+    .thesis.warn .verdict{color:#fb923c}
+    .thesis.bad  .verdict{color:#f87171}
+    .thesis .why{font-size:.7rem;color:#94a3b8;line-height:1.5}
+    .thesis .src{font-size:.63rem;color:#334155;margin-top:6px}
+    .thesis .src a{color:#38bdf877;text-decoration:none}
+    .thesis .src a:hover{color:#38bdf8}
 
-    /* ─── TIMELINE ─── */
-    .timeline {
-      max-width: 1140px;
-      margin: 0 auto 16px;
-    }
-    .tl-title {
-      font-size: 0.75rem; font-weight: 600; color: #64748b;
-      text-transform: uppercase; letter-spacing: .06em;
-      margin-bottom: 12px;
-    }
-    .tl-events {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-    .tl-event {
-      flex: 1;
-      min-width: 100px;
-      background: #161b27;
-      border: 1px solid #1e2d45;
-      border-right: none;
-      padding: 12px 10px;
-    }
-    .tl-event:first-child { border-radius: 12px 0 0 12px; }
-    .tl-event:last-child  { border-radius: 0 12px 12px 0; border-right: 1px solid #1e2d45; }
-    .tl-event.shock   { background: #1f1117; border-color: #f87171; }
-    .tl-event.forecast{ background: #1a1f12; border-color: #4ade80; }
-    .tl-year  { font-size: 0.9rem; font-weight: 800; color: #fff; }
-    .tl-event.shock    .tl-year { color: #f87171; }
-    .tl-event.forecast .tl-year { color: #4ade80; }
-    .tl-total { font-size: 0.72rem; color: #64748b; margin: 2px 0 6px; }
-    .tl-text  { font-size: 0.68rem; color: #94a3b8; line-height: 1.4; }
+    /* FORECAST TABLE */
+    .fc-table{width:100%;border-collapse:collapse;font-size:.75rem}
+    .fc-table th{text-align:left;color:#475569;font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px solid #1e2d45}
+    .fc-table td{padding:9px 10px;border-bottom:1px solid #161b27;color:#cbd5e1;vertical-align:top}
+    .fc-table tr:last-child td{border-bottom:none}
+    .fc-table tr:hover td{background:#1a2030}
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+    .dot.g{background:#4ade80}.dot.y{background:#fb923c}.dot.r{background:#f87171}.dot.k{background:#475569}
+    .stars{color:#fb923c;font-size:.9rem;letter-spacing:1px}
 
-    /* ─── FOOTER ─── */
-    .footer { text-align: center; color: #2d3a50; font-size: 0.68rem; max-width: 1140px; margin: 20px auto 0; }
+    /* TIMELINE */
+    .tl{display:flex;overflow-x:auto;padding-bottom:4px;gap:0;margin-bottom:14px}
+    .te{flex:1;min-width:88px;background:#161b27;border:1px solid #1e2d45;border-right:none;padding:10px 8px}
+    .te:first-child{border-radius:10px 0 0 10px}
+    .te:last-child{border-radius:0 10px 10px 0;border-right:1px solid #1e2d45}
+    .te.shock{background:#1a0f14;border-color:#f8717155}
+    .te.rec{background:#0f1a14;border-color:#4ade8033}
+    .te .ty{font-size:.85rem;font-weight:800;color:#fff}
+    .te.shock .ty{color:#f87171}
+    .te.rec   .ty{color:#4ade80}
+    .te .tv{font-size:.65rem;color:#475569;margin:2px 0 5px}
+    .te .tt{font-size:.65rem;color:#94a3b8;line-height:1.4}
+
+    /* META NOTE */
+    .meta{background:#0f131a;border:1px solid #1e2d4555;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:.72rem;color:#475569;line-height:1.6}
+    .meta strong{color:#64748b}
+
+    .footer{text-align:center;color:#1e2d45;font-size:.65rem;margin-top:16px}
   </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="header">
-  <h1>Рекламный рынок Беларуси 2016–2026</h1>
-  <p>Источник: arobelarus · Анализ: German Golub (LinkedIn) · Данные извлечены из оригинального графика</p>
+<!-- HEADER -->
+<div class="hdr">
+  <h1>Рекламный рынок Беларуси 2016–2026 — разбор поста и данных</h1>
+  <p>Источник данных: arobelarus · Анализ поста German Golub (LinkedIn) · Сравнение: Statista, IAB Europe 2024</p>
 </div>
 
 <!-- KPI -->
 <div class="kpi-row">
-  <div class="kpi">
-    <div class="val blue">$108M</div>
-    <div class="lbl">Пик до кризиса<br>2019</div>
-  </div>
-  <div class="kpi">
-    <div class="val red">−24%</div>
-    <div class="lbl">Худший год<br>2022 (уход брендов)</div>
-    <div class="sub">рынок $64.9M</div>
-  </div>
-  <div class="kpi">
-    <div class="val green">55%</div>
-    <div class="lbl">Доля интернета<br>2024 (было 26% в 2016)</div>
-  </div>
-  <div class="kpi">
-    <div class="val green">+66%</div>
-    <div class="lbl">Рост интернет-рекламы<br>2020 → 2026F</div>
-    <div class="sub">$40.5M → $67.4M</div>
-  </div>
-  <div class="kpi">
-    <div class="val orange">$102.5M</div>
-    <div class="lbl">Прогноз 2025F<br>≈ уровень 2019</div>
-  </div>
-  <div class="kpi">
-    <div class="val orange">$123.6M</div>
-    <div class="lbl">Прогноз 2026F<br>Новый исторический макс</div>
-  </div>
+  <div class="kpi"><div class="v blue">$108M</div><div class="l">Пик 2019<br>до кризиса</div></div>
+  <div class="kpi"><div class="v red">$64.9M</div><div class="l">Дно 2022<br>−24% YoY</div><div class="s">хуже чем ковидный 2020</div></div>
+  <div class="kpi"><div class="v green">55%</div><div class="l">Доля интернета 2024<br>было 26% в 2016</div></div>
+  <div class="kpi"><div class="v orange">$73.8M</div><div class="l">Рынок 2024<br>−32% от пика 2019</div></div>
+  <div class="kpi"><div class="v orange">$102.5M</div><div class="l">Прогноз 2025F<br>+39% YoY ⚠️</div></div>
+  <div class="kpi"><div class="v purple">$8</div><div class="l">Реклама на душу<br>2024 (Беларусь)</div><div class="s">Казахстан $27 · Чехия $146</div></div>
 </div>
 
-<!-- Main chart + share -->
-<div class="grid-2">
+<!-- ROW 1: main chart + share/yoy -->
+<div class="row2">
   <div class="card">
-    <h2>Объём рынка по каналам, $ млн</h2>
-    <div class="ch ch-tall"><canvas id="stackedChart"></canvas></div>
+    <h2>Рекламный рынок по каналам, $ млн (arobelarus)</h2>
+    <div class="ch h320"><canvas id="c1"></canvas></div>
   </div>
   <div class="card">
-    <h2>Доля интернет-рекламы в рынке, %</h2>
-    <div class="ch ch-med"><canvas id="shareChart"></canvas></div>
-    <h2 style="margin-top:20px">Прирост YoY: рынок vs интернет</h2>
-    <div class="ch ch-short"><canvas id="yoyChart"></canvas></div>
+    <h2>Доля интернета в рынке, %</h2>
+    <div class="ch h180"><canvas id="c2"></canvas></div>
+    <h2 style="margin-top:16px">YoY прирост: рынок vs интернет</h2>
+    <div class="ch h180" style="margin-top:8px"><canvas id="c3"></canvas></div>
   </div>
 </div>
 
-<!-- Two bottom charts -->
-<div class="grid-2-equal">
+<!-- ROW 2: split + per-capita comparison -->
+<div class="row2eq">
   <div class="card">
-    <h2>Традиционные каналы vs Интернет, $ млн</h2>
-    <div class="ch ch-med"><canvas id="splitChart"></canvas></div>
+    <h2>Интернет vs традиционные каналы, $ млн</h2>
+    <div class="ch h220"><canvas id="c4"></canvas></div>
   </div>
   <div class="card">
-    <h2>Абсолютный объём интернет-рекламы, $ млн</h2>
-    <div class="ch ch-med"><canvas id="internetChart"></canvas></div>
+    <h2>Рекламный рынок на душу населения, 2024 · $</h2>
+    <div class="ch h220"><canvas id="c5"></canvas></div>
   </div>
 </div>
 
-<!-- Insights -->
-<div class="insights">
-  <div class="insight warn">
-    <div class="icon">💥</div>
-    <div class="body">
-      <div class="title">2022 — настоящая катастрофа, не 2020</div>
-      <div class="desc">Рынок упал до $64.9M (−24%) — это хуже ковидного 2020 ($88.9M, −18%). Уход западных брендов обнулил традиционные каналы: с $62.9M до $28.8M за 3 года.</div>
+<!-- THESIS SECTION -->
+<div class="card" style="margin-bottom:14px">
+  <h2>Разбор тезисов поста — что подтверждают данные, что нет</h2>
+</div>
+<div class="thesis-grid">
+
+  <div class="thesis warn">
+    <div class="badge">⚠️</div>
+    <div>
+      <div class="claim">«2020 — ковид и протесты поставили всё на паузу»</div>
+      <div class="verdict">НЕПОЛНО — создаёт ложную иерархию</div>
+      <div class="why">Данные: 2020 = −18% ($108M→$88.9M). Но 2022 = −24% ($85.7M→$64.9M) — хуже. Пост создаёт нарратив, где 2020 главный удар. На самом деле уход западных брендов в 2022 нанёс вдвое больший структурный урон.</div>
     </div>
   </div>
-  <div class="insight focus">
-    <div class="icon">🌐</div>
-    <div class="body">
-      <div class="title">Интернет устоял там, где ТВ рухнуло</div>
-      <div class="desc">В 2022 интернет упал лишь на 8% (с $39.2M до $36.1M), пока традиционные каналы провалились на 38%. Структурный сдвиг: доля интернета прыгнула с 46% до 55% за один год.</div>
+
+  <div class="thesis bad">
+    <div class="badge">❌</div>
+    <div>
+      <div class="claim">«Доля интернета растёт — интернет побеждает»</div>
+      <div class="verdict">МАНИПУЛЯЦИЯ ДАННЫМИ</div>
+      <div class="why">В 2022 доля прыгнула с 46% до 55% — НЕ потому что интернет рос. Интернет в деньгах упал на 8% ($39.2M→$36.1M). Доля выросла потому что традиционные каналы обвалились на 38%. Это «победа выжившего», не рост.</div>
     </div>
   </div>
-  <div class="insight good">
-    <div class="icon">📈</div>
-    <div class="body">
-      <div class="title">2025–2026: рынок бьёт рекорды</div>
-      <div class="desc">$123.6M в 2026F — выше докризисного пика $108M (2019). Но структура другая: интернет вырос на $22M, традиционные каналы восстанавливаются медленно ($56.2M vs $62.9M в 2019).</div>
+
+  <div class="thesis ok">
+    <div class="badge">✅</div>
+    <div>
+      <div class="claim">«2022 — уход Samsung, Bosch, LG, VW, Kia, Mars и др.»</div>
+      <div class="verdict">ПОДТВЕРЖДАЕТСЯ</div>
+      <div class="why">Данные это прямо показывают: традиционные каналы (ТВ, OOH, пресса) — основные носители имиджевой рекламы брендов — рухнули с $46.5M до $28.8M за один год. Это $17.7M испарившихся бюджетов.</div>
     </div>
   </div>
-  <div class="insight caution">
-    <div class="icon">🔄</div>
-    <div class="body">
-      <div class="title">Замещение, а не восстановление</div>
-      <div class="desc">Рост рынка идёт за счёт новых игроков (букмекеры → российские → китайские бренды), а не возврата старых. Это другой рынок с другой структурой спроса.</div>
+
+  <div class="thesis bad">
+    <div class="badge">❌</div>
+    <div>
+      <div class="claim">«2025-2026 — рынок превысит $100M и продолжит расти»</div>
+      <div class="verdict">ПРОГНОЗ АГРЕССИВНЫЙ, необоснован</div>
+      <div class="why">+39% YoY в 2025F — таких темпов нет ни у одного сопоставимого рынка. Казахстан (нефтяные деньги) растёт ~10-12%/год. Украина в активной войне выросла +13.4% в 2024. Откуда у Беларуси +39% — в посте не объяснено.</div>
+      <div class="src">Источник сравнения: <a href="https://www.statista.com/forecasts/1537984/ad-spend-growth-by-country-eurasia" target="_blank">Statista Eurasia Ad Spend Growth 2024</a></div>
     </div>
   </div>
-  <div class="insight warn">
-    <div class="icon">⚠️</div>
-    <div class="body">
-      <div class="title">Традиционные каналы — структурная потеря</div>
-      <div class="desc">ТВ, радио, пресса в 2026F не вернутся к уровню 2019. Бренды, которые их финансировали, ушли навсегда. Новые игроки идут в перформанс-каналы.</div>
+
+  <div class="thesis warn">
+    <div class="badge">⚠️</div>
+    <div>
+      <div class="claim">«Google и AI-модели перераспределят трафик»</div>
+      <div class="verdict">ВЕРНО ГЛОБАЛЬНО — для Беларуси другая механика</div>
+      <div class="why">Глобально: Google AI Overviews снизили органический CTR на 61%, HubSpot потерял 70–80% трафика. Но в Беларуси ~60% поискового трафика — Яндекс. Эффект придёт через Яндекс AI, не Google, и с задержкой 1–2 года.</div>
+      <div class="src"><a href="https://searchengineland.com/google-ai-overviews-drive-drop-organic-paid-ctr-464212" target="_blank">Search Engine Land: AI Overviews CTR impact</a></div>
     </div>
   </div>
-  <div class="insight good">
-    <div class="icon">🤖</div>
-    <div class="body">
-      <div class="title">AI — следующий разрыв</div>
-      <div class="desc">AI и LLM угрожают SEO-зависимому трафику. Компании, удерживающие аудиторию напрямую (e-commerce, retention), получат перетёкшие бюджеты. Прогноз 2028: закон о цифровых платформах.</div>
+
+  <div class="thesis bad">
+    <div class="badge">❌</div>
+    <div>
+      <div class="claim">«Инвестиции переместятся из соцсетей в e-commerce»</div>
+      <div class="verdict">НЕ ПОДТВЕРЖДАЕТСЯ для Беларуси</div>
+      <div class="why">Belarus e-commerce ad revenue = $1.79M в 2024 (Statista) — это 2.4% рынка. Рынок слишком мал для структурного перераспределения. Тезис справедлив для зрелых рынков (US, EU), но не для Беларуси 2025–2026.</div>
+      <div class="src"><a href="https://www.statista.com/statistics/1451560/retail-media-ad-revenue-belarus/" target="_blank">Statista: Belarus retail media ad revenue 2024</a></div>
     </div>
   </div>
+
 </div>
 
-<!-- Timeline -->
-<div class="timeline">
-  <div class="tl-title">Хронология событий</div>
-  <div class="tl-events">
-    <div class="tl-event">
-      <div class="tl-year">2016</div>
-      <div class="tl-total">$72.9M · 26%</div>
-      <div class="tl-text">Базовый год. Интернет только набирает долю</div>
-    </div>
-    <div class="tl-event">
-      <div class="tl-year">2017</div>
-      <div class="tl-total">$87.3M · 33%</div>
-      <div class="tl-text">Быстрый рост. Интернет +53% YoY</div>
-    </div>
-    <div class="tl-event">
-      <div class="tl-year">2018</div>
-      <div class="tl-total">$98.8M · 36%</div>
-      <div class="tl-text">Рынок стремится к $100M</div>
-    </div>
-    <div class="tl-event">
-      <div class="tl-year">2019</div>
-      <div class="tl-total">$108.0M · 42%</div>
-      <div class="tl-text">Исторический максимум. Западные бренды на пике</div>
-    </div>
-    <div class="tl-event shock">
-      <div class="tl-year">2020</div>
-      <div class="tl-total">$88.9M · 46%</div>
-      <div class="tl-text">COVID + протесты. −18% рынок</div>
-    </div>
-    <div class="tl-event shock">
-      <div class="tl-year">2021</div>
-      <div class="tl-total">$85.7M · 46%</div>
-      <div class="tl-text">Закрытие медиа. Заморозка бюджетов</div>
-    </div>
-    <div class="tl-event shock">
-      <div class="tl-year">2022</div>
-      <div class="tl-total">$64.9M · 55%</div>
-      <div class="tl-text">Худший год. −24%. Уход Samsung, LG, VW и др.</div>
-    </div>
-    <div class="tl-event">
-      <div class="tl-year">2023</div>
-      <div class="tl-total">$68.1M · 54%</div>
-      <div class="tl-text">Букмекеры и RU-рекламодатели заполняют пустоту</div>
-    </div>
-    <div class="tl-event">
-      <div class="tl-year">2024</div>
-      <div class="tl-total">$73.8M · 55%</div>
-      <div class="tl-text">Китайские бренды. Рост performance-маркетинга</div>
-    </div>
-    <div class="tl-event forecast">
-      <div class="tl-year">2025F</div>
-      <div class="tl-total">$102.5M · 52%</div>
-      <div class="tl-text">+39% YoY. Рынок возвращается к пику 2019</div>
-    </div>
-    <div class="tl-event forecast">
-      <div class="tl-year">2026F</div>
-      <div class="tl-total">$123.6M · 55%</div>
-      <div class="tl-text">Новый рекорд. AI начинает перераспределять трафик</div>
-    </div>
-  </div>
+<!-- FORECAST TABLE -->
+<div class="card" style="margin-bottom:14px">
+  <h2>Оценка прогноза по категориям</h2>
+  <table class="fc-table">
+    <thead>
+      <tr>
+        <th>Категория</th>
+        <th>Прогноз 2025–2026</th>
+        <th>Реалистичность</th>
+        <th>Обоснование</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Общий рынок 2025F</strong></td>
+        <td>$102.5M (+39%)</td>
+        <td><span class="dot r"></span><span class="stars">★☆☆☆☆</span></td>
+        <td>+39% YoY не имеет прецедентов в регионе. Реалистичнее: $80–88M</td>
+      </tr>
+      <tr>
+        <td><strong>Общий рынок 2026F</strong></td>
+        <td>$123.6M (+21%)</td>
+        <td><span class="dot y"></span><span class="stars">★★★☆☆</span></td>
+        <td>Достижимо, но только если 2025 ≠ провал. +21% — уже ближе к реальности</td>
+      </tr>
+      <tr>
+        <td><strong>Интернет-реклама 2026F</strong></td>
+        <td>$67.4M (+66% к 2020)</td>
+        <td><span class="dot g"></span><span class="stars">★★★★☆</span></td>
+        <td>Структурный тренд устойчив. Интернет единственный канал без структурных потерь</td>
+      </tr>
+      <tr>
+        <td><strong>Доля интернета 55%+</strong></td>
+        <td>Удержание и рост</td>
+        <td><span class="dot g"></span><span class="stars">★★★★★</span></td>
+        <td>Необратимый сдвиг. Западные бренды не вернутся — значит ТВ не восстановится</td>
+      </tr>
+      <tr>
+        <td><strong>Традиционные каналы</strong></td>
+        <td>Частичное восстановление</td>
+        <td><span class="dot y"></span><span class="stars">★★☆☆☆</span></td>
+        <td>В 2026F прогноз $56M vs $62.9M в 2019. Не достигнут пик — новые игроки не дают имиджевых бюджетов</td>
+      </tr>
+      <tr>
+        <td><strong>Китайские бренды как драйвер</strong></td>
+        <td>Рост присутствия</td>
+        <td><span class="dot y"></span><span class="stars">★★★☆☆</span></td>
+        <td>NIQ подтверждает экспансию в Европе. Риск: геополитика и вторичные санкции могут остановить</td>
+      </tr>
+      <tr>
+        <td><strong>Performance > Brand</strong></td>
+        <td>Доминирование</td>
+        <td><span class="dot g"></span><span class="stars">★★★★★</span></td>
+        <td>Глобальный тренд + структура новых рекламодателей (букмекеры, e-com) это подтверждают</td>
+      </tr>
+      <tr>
+        <td><strong>Закон о платформах 2028</strong></td>
+        <td>Принятие</td>
+        <td><span class="dot k"></span><span class="stars">?????</span></td>
+        <td>Источников нет. Непроверяемый тезис — может быть wishful thinking или инсайд</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="footer">
-  Данные из графика arobelarus · Анализ German Golub (LinkedIn) · Дашборд: ClaudeClaw 2026
+<!-- META NOTE -->
+<div class="meta">
+  <strong>Замечание о методе:</strong> Автор пишет «ChatGPT принципиально рисовал этот слайд, руками в PowerPoint я сделал бы быстрее в 10 раз». Это не аналитическое наблюдение — это сигнальный маркетинг: показать аудитории, что автор использует AI. Сам факт использования ChatGPT для слайдов не добавляет достоверности данным и не компенсирует отсутствие источников под прогнозной частью.
 </div>
+
+<!-- TIMELINE -->
+<div class="card" style="margin-bottom:14px"><h2>Хронология 2016–2026</h2></div>
+<div class="tl">
+  <div class="te"><div class="ty">2016</div><div class="tv">$72.9M · 26%</div><div class="tt">База. Интернет набирает долю</div></div>
+  <div class="te"><div class="ty">2017</div><div class="tv">$87.3M · 33%</div><div class="tt">Интернет +53% YoY</div></div>
+  <div class="te"><div class="ty">2018</div><div class="tv">$98.8M · 36%</div><div class="tt">Рост к отметке $100M</div></div>
+  <div class="te"><div class="ty">2019</div><div class="tv">$108.0M · 42%</div><div class="tt">Исторический пик. Западные бренды на максимуме</div></div>
+  <div class="te shock"><div class="ty">2020</div><div class="tv">$88.9M · 46%</div><div class="tt">COVID + протесты −18%</div></div>
+  <div class="te shock"><div class="ty">2021</div><div class="tv">$85.7M · 46%</div><div class="tt">Закрытие медиа −4%</div></div>
+  <div class="te shock"><div class="ty">2022</div><div class="tv">$64.9M · 55%</div><div class="tt">Реальный обвал −24%. Традиционные каналы −38%</div></div>
+  <div class="te"><div class="ty">2023</div><div class="tv">$68.1M · 54%</div><div class="tt">Букмекеры и RU-бренды +5%</div></div>
+  <div class="te"><div class="ty">2024</div><div class="tv">$73.8M · 55%</div><div class="tt">Китайские бренды +8%</div></div>
+  <div class="te rec"><div class="ty">2025F</div><div class="tv">$102.5M · 52%</div><div class="tt">Прогноз +39% ⚠️ агрессивно</div></div>
+  <div class="te rec"><div class="ty">2026F</div><div class="tv">$123.6M · 55%</div><div class="tt">Новый рекорд — если реализуется</div></div>
+</div>
+
+<div class="footer">Данные: arobelarus · Statista 2024 · IAB Europe 2024 · NIQ 2026 · Search Engine Land 2025 · Dashboard: ClaudeClaw</div>
+
+</div><!-- /wrap -->
 
 <script>
-Chart.register(ChartAnnotation);
+const Y = ['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025F','2026F'];
+const tot = [72.9,87.3,98.8,108.0,88.9,85.7,64.9,68.1,73.8,102.5,123.6];
+const net = [18.9,28.9,35.2,45.1,40.5,39.2,36.1,36.9,40.9,53.3,67.4];
+const trad= tot.map((t,i)=>+(t-net[i]).toFixed(1));
+const shr = [26,33,36,42,46,46,55,54,55,52,55];
+const yM  = [null,20,13,9,-18,-4,-24,5,8,39,21];
+const yN  = [null,53,22,28,-10,-3,-8,2,11,30,27];
 
-const YEARS = ['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025F','2026F'];
+const isFc= i=>i>=9;
+const G='#1e2d45', T='#475569';
+const BLUE='#38bdf8', GREEN='#4ade80', RED='#f87171', ORA='#fb923c', PUR='#a78bfa';
 
-// Verified from original chart
-const totals  = [72.9, 87.3, 98.8, 108.0, 88.9, 85.7, 64.9, 68.1, 73.8, 102.5, 123.6];
-const internet = [18.9, 28.9, 35.2, 45.1, 40.5, 39.2, 36.1, 36.9, 40.9, 53.3, 67.4];
-const other    = totals.map((t, i) => +(t - internet[i]).toFixed(1));
-const share    = [26, 33, 36, 42, 46, 46, 55, 54, 55, 52, 55];
-const yoyMkt   = [null, 20, 13, 9, -18, -4, -24, 5, 8, 39, 21];
-const yoyNet   = [null, 53, 22, 28, -10, -3, -8, 2, 11, 30, 27];
-
-const isForecast = i => i >= 9;
-const BLUE   = '#38bdf8';
-const ORANGE = '#fb923c';
-const RED    = '#f87171';
-const GREEN  = '#4ade80';
-const PURPLE = '#a78bfa';
-const GRID   = '#1e2d45';
-const TICK   = '#475569';
-
-function baseOpts(extra = {}) {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 14 } }, ...extra.plugins },
-    scales: {
-      x: { ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
-      y: { ticks: { color: TICK }, grid: { color: GRID } },
-      ...extra.scales
-    },
-    ...extra,
-  };
-}
-
-// ── 1. Stacked bar ──
-new Chart(document.getElementById('stackedChart'), {
-  type: 'bar',
-  data: {
-    labels: YEARS,
-    datasets: [
-      {
-        label: 'Интернет-реклама',
-        data: internet,
-        backgroundColor: YEARS.map((_, i) => isForecast(i) ? BLUE + '77' : BLUE + 'cc'),
-        stack: 'a',
-      },
-      {
-        label: 'Традиционные каналы',
-        data: other,
-        backgroundColor: YEARS.map((_, i) => isForecast(i) ? PURPLE + '55' : PURPLE + '99'),
-        stack: 'a',
-      },
-    ]
-  },
-  options: baseOpts({
-    plugins: {
-      legend: { labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 14 } },
-      annotation: {
-        annotations: {
-          peak: {
-            type: 'line', scaleID: 'x', value: '2019',
-            borderColor: '#f8717155', borderWidth: 1, borderDash: [4, 4],
-            label: { display: true, content: 'Пик 2019', color: '#f87171', font: { size: 10 }, position: 'start' }
-          },
-          forecast: {
-            type: 'box', xMin: '2025F', xMax: '2026F',
-            backgroundColor: '#4ade8008', borderColor: '#4ade8033',
-            label: { display: true, content: 'Прогноз', color: '#4ade80', font: { size: 10 } }
-          }
-        }
-      },
-      tooltip: {
-        callbacks: {
-          footer: items => `Итого: $${totals[items[0].dataIndex]}M`
-        }
-      }
-    },
-    scales: {
-      x: { stacked: true, ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
-      y: { stacked: true, ticks: { color: TICK, callback: v => '$' + v + 'M' }, grid: { color: GRID } }
-    }
-  })
+const base=(extra={})=>({
+  responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}},...(extra.plugins||{})},
+  scales:{
+    x:{ticks:{color:T,font:{size:10}},grid:{color:G}},
+    y:{ticks:{color:T},grid:{color:G}},
+    ...(extra.scales||{})
+  }
 });
 
-// ── 2. Share line ──
-new Chart(document.getElementById('shareChart'), {
-  type: 'line',
-  data: {
-    labels: YEARS,
-    datasets: [{
-      label: 'Доля интернета, %',
-      data: share,
-      borderColor: BLUE,
-      backgroundColor: BLUE + '18',
-      fill: true, tension: 0.35,
-      pointBackgroundColor: YEARS.map((_, i) => isForecast(i) ? ORANGE : BLUE),
-      pointRadius: 5,
-    }]
-  },
-  options: baseOpts({
-    plugins: {
-      legend: { display: false },
-      annotation: {
-        annotations: {
-          half: {
-            type: 'line', scaleID: 'y', value: 50,
-            borderColor: '#ffffff22', borderWidth: 1, borderDash: [6, 4],
-            label: { display: true, content: '50%', color: '#475569', font: { size: 10 }, position: 'end' }
-          }
-        }
-      }
+// C1 stacked
+new Chart(document.getElementById('c1'),{
+  type:'bar',
+  data:{labels:Y,datasets:[
+    {label:'Интернет-реклама',data:net,
+     backgroundColor:Y.map((_,i)=>isFc(i)?BLUE+'77':BLUE+'cc'),stack:'a'},
+    {label:'Традиционные каналы',data:trad,
+     backgroundColor:Y.map((_,i)=>isFc(i)?PUR+'44':PUR+'88'),stack:'a'},
+  ]},
+  options:{...base({
+    plugins:{
+      legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:13}},
+      tooltip:{callbacks:{footer:items=>`Итого: $${tot[items[0].dataIndex]}M`}}
     },
-    scales: {
-      x: { ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
-      y: { min: 0, max: 70, ticks: { color: TICK, callback: v => v + '%' }, grid: { color: GRID } }
+    scales:{
+      x:{stacked:true,ticks:{color:T,font:{size:10}},grid:{color:G}},
+      y:{stacked:true,ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}
     }
-  })
+  })}
 });
 
-// ── 3. YoY bars ──
-new Chart(document.getElementById('yoyChart'), {
-  type: 'bar',
-  data: {
-    labels: YEARS.slice(1),
-    datasets: [
-      {
-        label: 'Рынок',
-        data: yoyMkt.slice(1),
-        backgroundColor: yoyMkt.slice(1).map(v => v >= 0 ? GREEN + 'aa' : RED + 'aa'),
-        borderRadius: 3,
-      },
-      {
-        label: 'Интернет',
-        data: yoyNet.slice(1),
-        backgroundColor: yoyNet.slice(1).map(v => v >= 0 ? BLUE + 'aa' : '#fb923caa'),
-        borderRadius: 3,
-      }
-    ]
-  },
-  options: baseOpts({
-    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 12 } } },
-    scales: {
-      x: { ticks: { color: TICK, font: { size: 9 } }, grid: { color: GRID } },
-      y: { ticks: { color: TICK, callback: v => v + '%' }, grid: { color: GRID } }
+// C2 share line
+new Chart(document.getElementById('c2'),{
+  type:'line',
+  data:{labels:Y,datasets:[{
+    label:'Доля интернета %',data:shr,
+    borderColor:BLUE,backgroundColor:BLUE+'18',fill:true,tension:.35,
+    pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:BLUE),pointRadius:4
+  }]},
+  options:{...base({
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:T,font:{size:9}},grid:{color:G}},
+      y:{min:0,max:70,ticks:{color:T,callback:v=>v+'%'},grid:{color:G}}
     }
-  })
+  })}
 });
 
-// ── 4. Split area ──
-new Chart(document.getElementById('splitChart'), {
-  type: 'line',
-  data: {
-    labels: YEARS,
-    datasets: [
-      {
-        label: 'Интернет $M',
-        data: internet,
-        borderColor: BLUE, backgroundColor: BLUE + '22',
-        fill: true, tension: 0.35,
-        pointBackgroundColor: YEARS.map((_, i) => isForecast(i) ? ORANGE : BLUE),
-        pointRadius: 4,
-      },
-      {
-        label: 'Традиционные $M',
-        data: other,
-        borderColor: PURPLE, backgroundColor: PURPLE + '22',
-        fill: true, tension: 0.35,
-        pointBackgroundColor: YEARS.map((_, i) => isForecast(i) ? ORANGE : PURPLE),
-        pointRadius: 4,
-      }
-    ]
-  },
-  options: baseOpts({
-    scales: {
-      x: { ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
-      y: { ticks: { color: TICK, callback: v => '$' + v + 'M' }, grid: { color: GRID } }
+// C3 yoy
+new Chart(document.getElementById('c3'),{
+  type:'bar',
+  data:{labels:Y.slice(1),datasets:[
+    {label:'Рынок',data:yM.slice(1),backgroundColor:yM.slice(1).map(v=>v>=0?GREEN+'99':RED+'99'),borderRadius:3},
+    {label:'Интернет',data:yN.slice(1),backgroundColor:yN.slice(1).map(v=>v>=0?BLUE+'99':ORA+'99'),borderRadius:3}
+  ]},
+  options:{...base({
+    plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:11}}},
+    scales:{
+      x:{ticks:{color:T,font:{size:9}},grid:{color:G}},
+      y:{ticks:{color:T,callback:v=>v+'%'},grid:{color:G}}
     }
-  })
+  })}
 });
 
-// ── 5. Internet absolute ──
-new Chart(document.getElementById('internetChart'), {
-  type: 'bar',
-  data: {
-    labels: YEARS,
-    datasets: [{
-      label: 'Интернет-реклама $M',
-      data: internet,
-      backgroundColor: YEARS.map((_, i) => isForecast(i) ? ORANGE + 'bb' : BLUE + 'cc'),
-      borderRadius: 5,
-    }]
-  },
-  options: baseOpts({
-    plugins: {
-      legend: { display: false },
-      annotation: {
-        annotations: {
-          min2022: {
-            type: 'line', scaleID: 'y', value: 36.1,
-            borderColor: RED + '55', borderWidth: 1, borderDash: [4, 4],
-            label: { display: true, content: 'min 2022: $36.1M', color: RED, font: { size: 9 }, position: 'end' }
-          }
-        }
-      },
-      tooltip: { callbacks: { label: ctx => `$${ctx.parsed.y}M` } }
+// C4 split area
+new Chart(document.getElementById('c4'),{
+  type:'line',
+  data:{labels:Y,datasets:[
+    {label:'Интернет $M',data:net,borderColor:BLUE,backgroundColor:BLUE+'22',fill:true,tension:.35,
+     pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:BLUE),pointRadius:4},
+    {label:'Традиционные $M',data:trad,borderColor:PUR,backgroundColor:PUR+'22',fill:true,tension:.35,
+     pointBackgroundColor:Y.map((_,i)=>isFc(i)?ORA:PUR),pointRadius:4}
+  ]},
+  options:{...base({
+    scales:{
+      x:{ticks:{color:T,font:{size:10}},grid:{color:G}},
+      y:{ticks:{color:T,callback:v=>'$'+v+'M'},grid:{color:G}}
+    }
+  })}
+});
+
+// C5 per-capita horizontal bar
+const pcLabels = ['Чехия (ЕС)','Латвия (ЕС)','Польша (ЕС)','Казахстан (СНГ)','Азербайджан (СНГ)','Беларусь'];
+const pcVals   = [146, 80, 57, 28, 27, 8];
+const pcColors = ['#38bdf8cc','#38bdf8aa','#38bdf888','#a78bfa99','#a78bfa77','#f87171cc'];
+new Chart(document.getElementById('c5'),{
+  type:'bar',
+  data:{labels:pcLabels,datasets:[{
+    label:'$/чел (digital, Statista 2024)',
+    data:pcVals,
+    backgroundColor:pcColors,
+    borderRadius:5,
+  }]},
+  options:{
+    indexAxis:'y',
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>`$${ctx.parsed.x} на человека`}}
     },
-    scales: {
-      x: { ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
-      y: { ticks: { color: TICK, callback: v => '$' + v + 'M' }, grid: { color: GRID } }
+    scales:{
+      x:{ticks:{color:T,callback:v=>'$'+v},grid:{color:G}},
+      y:{ticks:{color:'#cbd5e1',font:{size:11}},grid:{color:G}}
     }
-  })
+  }
 });
 </script>
 </body>
